@@ -6,19 +6,17 @@ import model.User;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class AddUserSpecification extends SqlSpecification<User> {
+public class CheckUserSpecification extends SqlSpecification<User> {
 
-    public AddUserSpecification(User entity) {
+    public CheckUserSpecification(User entity) {
         super(entity);
     }
 
     @Override
     public PreparedStatement getSpecification() throws SQLException {
         PreparedStatement statement = DatabaseConnection.getInstance().getConnection()
-                .prepareStatement("INSERT INTO user_account(username, password, type) values (?,?,?)");
+                .prepareStatement("SELECT username FROM user_account WHERE username = ? lmit 1");
         statement.setString(1, this.entity.getUsername());
-        statement.setString(2, this.entity.getPassword());
-        statement.setString(3, this.entity.getType().toString());
         return statement;
     }
 }

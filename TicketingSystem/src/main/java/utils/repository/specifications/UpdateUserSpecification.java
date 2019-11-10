@@ -18,7 +18,7 @@ public class UpdateUserSpecification extends SqlSpecification<User> {
                 .prepareStatement("UPDATE user_account SET username = ?, password = ?, type = ? WHERE id = ?");
         statement.setString(1, this.entity.getUsername());
         statement.setString(2, this.entity.getPassword());
-        statement.setString(3, this.entity.getType());
+        statement.setString(3, this.entity.getType().toString());
         statement.setInt(4, this.entity.getId());
         return statement;
     }

@@ -2,7 +2,9 @@ package model;
 
 import utils.enums.TicketStatus;
 
-public class Ticket {
+import java.io.Serializable;
+
+public class Ticket  implements Serializable {
 
     private int id;
     private int userId;

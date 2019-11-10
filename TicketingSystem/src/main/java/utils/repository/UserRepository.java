@@ -1,6 +1,8 @@
 package utils.repository;
 
 import model.User;
+import utils.enums.UserType;
+import utils.repository.specifications.CheckUserSpecification;
 import utils.repository.specifications.LoginSpecification;
 import utils.repository.specifications.RegisterSpecification;
 
@@ -13,7 +15,7 @@ public class UserRepository extends Repository<User> implements IUserRepository 
     public User login(User user) throws SQLException {
         ResultSet result = new LoginSpecification(user).getSpecification().executeQuery();
         if (result.next()) {
-            String type = result.getString("type");
+            UserType type = UserType.valueOf(result.getString("type"));
             String username = result.getString("username");
             return new User.UserBuilder(username).setType(type).build();
         }
@@ -24,5 +26,11 @@ public class UserRepository extends Repository<User> implements IUserRepository 
     public User register(User user) throws SQLException {
         int insertedUsers = new RegisterSpecification(user).getSpecification().executeUpdate();
         return insertedUsers == 1 ? user : null;
+    }
+
+    @Override
+    public Boolean checkUser(User user) throws SQLException {
+        ResultSet result = new CheckUserSpecification(user).getSpecification().executeQuery();
+        return result.next();
     }
 }
