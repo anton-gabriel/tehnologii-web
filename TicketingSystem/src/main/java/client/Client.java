@@ -1,7 +1,7 @@
 package client;
 
 import server.Server;
-import utils.dialogs.Dialogs;
+import utils.dialogs.Menu;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -28,8 +28,7 @@ public class Client {
 
     public static void main(String[] args) {
         Client client = new Client();
-        Dialogs dialogs = new Dialogs();
-
-
+        Menu menu = new Menu(in, out);
+        menu.loadMenu();
     }
 }

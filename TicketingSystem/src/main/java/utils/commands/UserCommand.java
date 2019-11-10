@@ -10,12 +10,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
-public class UserCommands {
+public class UserCommand {
 
     private ObjectInputStream in;
     private ObjectOutputStream out;
 
-    public UserCommands(ObjectInputStream in, ObjectOutputStream out) {
+    public UserCommand(ObjectInputStream in, ObjectOutputStream out) {
         this.in = in;
         this.out = out;
     }
