@@ -1,8 +1,8 @@
 package utils.commands;
 
-import javafx.util.Pair;
 import model.Ticket;
 import model.User;
+import utils.Pair;
 import utils.enums.Command;
 
 import java.io.IOException;
@@ -62,10 +62,10 @@ public class UserCommand {
         return false;
     }
 
-    public Boolean updateTicket(User user, Ticket ticket) {
+    public Boolean updateTicket(Ticket ticket) {
         try {
             out.writeObject(Command.UPDATE_TICKET);
-            out.writeObject(new Pair<User, Ticket>(user, ticket));
+            out.writeObject(ticket);
             return in.readBoolean();
         } catch (IOException e) {
             System.out.println(e.getMessage());

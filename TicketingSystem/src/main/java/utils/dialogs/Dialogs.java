@@ -1,6 +1,7 @@
 package utils.dialogs;
 
-import javafx.util.Pair;
+
+import utils.Pair;
 
 import java.util.Scanner;
 

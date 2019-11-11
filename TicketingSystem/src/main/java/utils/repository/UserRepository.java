@@ -15,8 +15,8 @@ public class UserRepository extends Repository<User> implements IUserRepository 
     public User login(User user) throws SQLException {
         ResultSet result = new LoginSpecification(user).getSpecification().executeQuery();
         if (result.next()) {
-            UserType type = UserType.valueOf(result.getString("type"));
-            String username = result.getString("username");
+            UserType type = UserType.valueOf(result.getString("type").trim());
+            String username = result.getString("username").trim();
             return new User.UserBuilder(username).setType(type).build();
         }
         return null;

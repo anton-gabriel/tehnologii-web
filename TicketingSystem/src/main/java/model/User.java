@@ -17,7 +17,9 @@ public class User implements Serializable {
         this.username = builder.username;
     }
 
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
     public String getPassword() {
         return password;
@@ -50,6 +52,7 @@ public class User implements Serializable {
 
         public UserBuilder(String username) {
             this.username = username;
+            this.type = UserType.USER;
         }
 
         public UserBuilder setPassword(String password) {

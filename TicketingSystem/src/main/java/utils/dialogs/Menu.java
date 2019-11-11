@@ -1,8 +1,8 @@
 package utils.dialogs;
 
-import javafx.util.Pair;
 import model.Ticket;
 import model.User;
+import utils.Pair;
 import utils.commands.UserCommand;
 import utils.enums.UserType;
 
@@ -34,7 +34,7 @@ public class Menu {
                     User user = userCommand.login(result.getKey(), result.getValue());
                     if (user != null) {
                         this.user = user;
-                        if (user.getType() == UserType.USER) {
+                        if (this.user.getType() == UserType.USER) {
                             loadUserMenu();
                         } else {
                             loadResolverMenu();
@@ -48,7 +48,7 @@ public class Menu {
                     User user = userCommand.register(result.getKey(), result.getValue());
                     if (user != null) {
                         this.user = user;
-                        if (user.getType() == UserType.USER) {
+                        if (this.user.getType() == UserType.USER) {
                             loadUserMenu();
                         } else {
                             loadResolverMenu();
@@ -78,6 +78,7 @@ public class Menu {
                     break;
             }
         } while (!choice.equals("0"));
+        this.user = null;
     }
 
     private void loadResolverMenu() {
@@ -96,6 +97,7 @@ public class Menu {
                     break;
             }
         } while (!choice.equals("0"));
+        this.user = null;
     }
 
 }

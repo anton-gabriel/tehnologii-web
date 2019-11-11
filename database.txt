@@ -1,13 +1,13 @@
-create database tiketing;
+create database ticketing;
 
 create table user_account (
- id int primary key not null,
+ id SERIAL primary key not null,
  username char(32) not null,
  password char(32) not null,
  type char(32) not null);
 
 create table ticket (
-id int primary key not null,
+id SERIAL primary key not null,
  user_id int references user_account(id),
  resolver_id int references user_account(id),
  message text,

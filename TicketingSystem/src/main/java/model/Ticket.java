@@ -65,6 +65,7 @@ public class Ticket  implements Serializable {
         public TicketBuilder(int userId, String message) {
             this.userId = userId;
             this.message = message;
+            this.status = TicketStatus.NEW;
         }
 
         public TicketBuilder setResolverId(int resolverId) {

@@ -16,8 +16,8 @@ public class LoginSpecification extends SqlSpecification<User> {
     public PreparedStatement getSpecification() throws SQLException {
         PreparedStatement statement = DatabaseConnection.getInstance().getConnection()
                 .prepareStatement("SELECT id, username, type FROM user_account WHERE username = ? and password =? limit 1");
-        statement.setString(1, this.entity.getUsername());
-        statement.setString(2, this.entity.getPassword());
+        statement.setString(1, this.entity.getUsername().trim());
+        statement.setString(2, this.entity.getPassword().trim());
         return statement;
     }
 }

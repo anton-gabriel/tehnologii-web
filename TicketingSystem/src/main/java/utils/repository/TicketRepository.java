@@ -49,8 +49,8 @@ public class TicketRepository extends Repository<Ticket> implements ITicketRepos
         while (result.next()) {
             int userId = result.getInt("user_id");
             int resolverId = result.getInt("resolver_id");
-            String message = result.getString("message");
-            TicketStatus status = TicketStatus.valueOf(result.getString("status"));
+            String message = result.getString("message").trim();
+            TicketStatus status = TicketStatus.valueOf(result.getString("status").trim());
             tickets.add(new Ticket.TicketBuilder(userId, message).setResolverId(resolverId).setStatus(status).build());
         }
         return tickets;

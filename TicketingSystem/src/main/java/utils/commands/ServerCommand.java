@@ -1,10 +1,13 @@
 package utils.commands;
 
+import model.Ticket;
 import model.User;
 import utils.ServerPool;
 import utils.enums.Command;
 import utils.repository.TicketRepository;
 import utils.repository.UserRepository;
+import utils.repository.specifications.AddTicketSpecification;
+import utils.repository.specifications.UpdateTicketSpecification;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -36,14 +39,19 @@ public class ServerCommand {
                 register();
                 break;
             case CREATE_TICKET:
+                createTicket();
                 break;
             case UPDATE_TICKET:
+                updateTicket();
                 break;
             case GET_AVAILABLE_TICKETS:
+                getAvailableTickets();
                 break;
             case GET_CREATED_TICKETS:
+                getCreatedTickets();
                 break;
             case GET_RESOLVER_TICKETS:
+                getResolverTickets();
                 break;
         }
     }
@@ -71,6 +79,51 @@ public class ServerCommand {
             } else {
                 out.writeObject(null);
             }
+        } catch (IOException | ClassNotFoundException | SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    private void createTicket() {
+        try {
+            Ticket ticket = (Ticket) in.readObject();
+            out.writeBoolean(this.ticketRepository.add(new AddTicketSpecification(ticket)) == 1);
+        } catch (IOException | ClassNotFoundException | SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    private void updateTicket() {
+        try {
+            Ticket ticket = (Ticket) in.readObject();
+            out.writeBoolean(this.ticketRepository.update(new UpdateTicketSpecification(ticket)) == 1);
+        } catch (IOException | ClassNotFoundException | SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    private void getAvailableTickets() {
+        try {
+            User user = (User) in.readObject();
+            out.writeObject(this.ticketRepository.getResolverAvailableTickets(user));
+        } catch (IOException | ClassNotFoundException | SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    private void getCreatedTickets() {
+        try {
+            User user = (User) in.readObject();
+            out.writeObject(this.ticketRepository.getUserCreatedTickets(user));
+        } catch (IOException | ClassNotFoundException | SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    private void getResolverTickets() {
+        try {
+            User user = (User) in.readObject();
+            out.writeObject(this.ticketRepository.getResolverTickets(user));
         } catch (IOException | ClassNotFoundException | SQLException exception) {
             System.out.println(exception.getMessage());
         }
