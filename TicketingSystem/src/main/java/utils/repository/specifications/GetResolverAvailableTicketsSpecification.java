@@ -2,6 +2,7 @@ package utils.repository.specifications;
 
 import database.DatabaseConnection;
 import model.User;
+import utils.enums.TicketStatus;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -15,7 +16,8 @@ public class GetResolverAvailableTicketsSpecification extends  SqlSpecification<
     @Override
     public PreparedStatement getSpecification() throws SQLException {
         PreparedStatement statement = DatabaseConnection.getInstance().getConnection()
-                .prepareStatement("SELECT id, user_id, resolver_id, message, status FROM ticket WHERE resolver_id IS NULL");
+                .prepareStatement("SELECT id, user_id, resolver_id, message, status FROM ticket WHERE resolver_id IS NULL AND status != ?");
+        statement.setString(1, TicketStatus.DONE.toString());
         return statement;
     }
 }
