@@ -15,7 +15,7 @@ public class GetResolverAvailableTicketsSpecification extends  SqlSpecification<
     @Override
     public PreparedStatement getSpecification() throws SQLException {
         PreparedStatement statement = DatabaseConnection.getInstance().getConnection()
-                .prepareStatement("SELECT user_id, resolver_id, message, status FROM ticket WHERE resolverId IS NULL");
+                .prepareStatement("SELECT user_id, resolver_id, message, status FROM ticket WHERE resolver_id IS NULL");
         return statement;
     }
 }

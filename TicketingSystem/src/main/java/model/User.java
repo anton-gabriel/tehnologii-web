@@ -12,6 +12,7 @@ public class User implements Serializable {
     private String username;
 
     public User(UserBuilder builder) {
+        this.id = builder.id;
         this.password = builder.password;
         this.type = builder.type;
         this.username = builder.username;
@@ -46,6 +47,8 @@ public class User implements Serializable {
     }
 
     public static class UserBuilder {
+
+        private int id;
         private String password;
         private UserType type;
         private String username;
@@ -65,9 +68,21 @@ public class User implements Serializable {
             return this;
         }
 
+        public UserBuilder setId(int id) {
+            this.id = id;
+            return this;
+        }
+
         public User build() {
             return new User(this);
         }
+
+        @Override
+        public String toString() {
+            return String.format("id = %d, username = %s, type = %s",
+                    id, username, type);
+        }
+
     }
 }
 

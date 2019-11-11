@@ -4,7 +4,7 @@ import utils.enums.TicketStatus;
 
 import java.io.Serializable;
 
-public class Ticket  implements Serializable {
+public class Ticket implements Serializable {
 
     private int id;
     private int userId;
@@ -53,6 +53,12 @@ public class Ticket  implements Serializable {
 
     public void setStatus(TicketStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("id = %d, resolver id = %d, user id = %d, message = %s, status = %s",
+                id, resolverId, userId, message, status);
     }
 
     public static class TicketBuilder {

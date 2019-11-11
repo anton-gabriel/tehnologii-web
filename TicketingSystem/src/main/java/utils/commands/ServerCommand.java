@@ -65,6 +65,7 @@ public class ServerCommand {
             } else {
                 out.writeObject(null);
             }
+            out.flush();
         } catch (IOException | ClassNotFoundException | SQLException exception) {
             System.out.println(exception.getMessage());
         }
@@ -79,6 +80,7 @@ public class ServerCommand {
             } else {
                 out.writeObject(null);
             }
+            out.flush();
         } catch (IOException | ClassNotFoundException | SQLException exception) {
             System.out.println(exception.getMessage());
         }
@@ -88,6 +90,7 @@ public class ServerCommand {
         try {
             Ticket ticket = (Ticket) in.readObject();
             out.writeBoolean(this.ticketRepository.add(new AddTicketSpecification(ticket)) == 1);
+            out.flush();
         } catch (IOException | ClassNotFoundException | SQLException exception) {
             System.out.println(exception.getMessage());
         }
@@ -97,6 +100,7 @@ public class ServerCommand {
         try {
             Ticket ticket = (Ticket) in.readObject();
             out.writeBoolean(this.ticketRepository.update(new UpdateTicketSpecification(ticket)) == 1);
+            out.flush();
         } catch (IOException | ClassNotFoundException | SQLException exception) {
             System.out.println(exception.getMessage());
         }
@@ -106,6 +110,7 @@ public class ServerCommand {
         try {
             User user = (User) in.readObject();
             out.writeObject(this.ticketRepository.getResolverAvailableTickets(user));
+            out.flush();
         } catch (IOException | ClassNotFoundException | SQLException exception) {
             System.out.println(exception.getMessage());
         }
@@ -115,6 +120,7 @@ public class ServerCommand {
         try {
             User user = (User) in.readObject();
             out.writeObject(this.ticketRepository.getUserCreatedTickets(user));
+            out.flush();
         } catch (IOException | ClassNotFoundException | SQLException exception) {
             System.out.println(exception.getMessage());
         }
@@ -124,6 +130,7 @@ public class ServerCommand {
         try {
             User user = (User) in.readObject();
             out.writeObject(this.ticketRepository.getResolverTickets(user));
+            out.flush();
         } catch (IOException | ClassNotFoundException | SQLException exception) {
             System.out.println(exception.getMessage());
         }

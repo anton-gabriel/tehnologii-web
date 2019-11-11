@@ -2,7 +2,6 @@ package utils.commands;
 
 import model.Ticket;
 import model.User;
-import utils.Pair;
 import utils.enums.Command;
 
 import java.io.IOException;
@@ -26,6 +25,7 @@ public class UserCommand {
                 out.writeObject(Command.LOGIN);
                 User user = new User.UserBuilder(username).setPassword(password).build();
                 out.writeObject(user);
+                out.flush();
                 return (User) in.readObject();
             }
             return null;
@@ -41,6 +41,7 @@ public class UserCommand {
                 out.writeObject(Command.REGISTER);
                 User user = new User.UserBuilder(username).setPassword(password).build();
                 out.writeObject(user);
+                out.flush();
                 return (User) in.readObject();
             }
             return null;
@@ -55,6 +56,20 @@ public class UserCommand {
             Ticket ticket = new Ticket.TicketBuilder(user.getId(), message).build();
             out.writeObject(Command.CREATE_TICKET);
             out.writeObject(ticket);
+            out.flush();
+            return in.readBoolean();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    public Boolean assignResolverTicket(Ticket ticket, User resolver) {
+        try {
+            ticket.setResolverId(resolver.getId());
+            out.writeObject(Command.UPDATE_TICKET);
+            out.writeObject(ticket);
+            out.flush();
             return in.readBoolean();
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -66,6 +81,7 @@ public class UserCommand {
         try {
             out.writeObject(Command.UPDATE_TICKET);
             out.writeObject(ticket);
+            out.flush();
             return in.readBoolean();
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -77,6 +93,7 @@ public class UserCommand {
         try {
             out.writeObject(Command.GET_AVAILABLE_TICKETS);
             out.writeObject(user);
+            out.flush();
             return (List<Ticket>) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
@@ -88,6 +105,7 @@ public class UserCommand {
         try {
             out.writeObject(Command.GET_CREATED_TICKETS);
             out.writeObject(user);
+            out.flush();
             return (List<Ticket>) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
@@ -99,6 +117,7 @@ public class UserCommand {
         try {
             out.writeObject(Command.GET_RESOLVER_TICKETS);
             out.writeObject(user);
+            out.flush();
             return (List<Ticket>) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());

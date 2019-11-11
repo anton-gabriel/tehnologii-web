@@ -4,6 +4,7 @@ import model.Ticket;
 import model.User;
 import utils.Pair;
 import utils.commands.UserCommand;
+import utils.enums.TicketStatus;
 import utils.enums.UserType;
 
 import java.io.ObjectInputStream;
@@ -68,11 +69,13 @@ public class Menu {
             choice = scan.nextLine();
             switch (choice) {
                 case "1":
+                    System.out.flush();
                     System.out.println("The message for the ticket: ");
                     String message = scan.nextLine();
                     userCommand.createTicket(this.user, message);
                     break;
                 case "2":
+                    System.out.flush();
                     List<Ticket> createdTickets = userCommand.getCreatedTickets(this.user);
                     createdTickets.forEach(System.out::println);
                     break;
@@ -88,16 +91,55 @@ public class Menu {
             dialogs.printResolverDialog();
             choice = scan.nextLine();
             switch (choice) {
-                case "1":
-                    userCommand.getAvailableTickets(this.user);
-                    //assign ticket
-                    break;
-                case "2":
-                    userCommand.getResolverTickets(this.user);
-                    break;
+                case "1": {
+                    List<Ticket> tickets = userCommand.getAvailableTickets(this.user);
+                    loadAssignResolverTicketMenu(tickets);
+                }
+                break;
+                case "2": {
+                    List<Ticket> tickets = userCommand.getResolverTickets(this.user);
+                    loadAssignedResolverTicketMenu(tickets);
+                }
+                break;
             }
         } while (!choice.equals("0"));
         this.user = null;
     }
 
+    private void loadAssignResolverTicketMenu(List<Ticket> tickets) {
+        try {
+            Scanner scanner = new Scanner(System.in);
+            int choice;
+            do {
+                System.out.flush();
+                tickets.forEach(System.out::println);
+                dialogs.printAssignResolverTicketDialog();
+                choice = scanner.nextInt();
+                userCommand.assignResolverTicket(tickets.get(choice), this.user);
+            } while (choice != 0);
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    private void loadAssignedResolverTicketMenu(List<Ticket> tickets) {
+        try {
+            Scanner scanner = new Scanner(System.in);
+            int choice;
+            TicketStatus status;
+            do {
+                System.out.flush();
+                tickets.forEach(System.out::println);
+                dialogs.printAssignedResolverTicketDialog();
+                choice = scanner.nextInt();
+                System.out.println("Enter desired status.");
+                status = TicketStatus.valueOf(scanner.nextLine().trim());
+                Ticket ticket = tickets.get(choice);
+                ticket.setStatus(status);
+                userCommand.updateTicket(ticket);
+            } while (choice != 0);
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
 }

@@ -27,6 +27,16 @@ public class Dialogs {
         System.out.println("0.Sign out");
     }
 
+    public void printAssignResolverTicketDialog() {
+        System.out.println("Select a ticket to assign.");
+        System.out.println("0.Cancel");
+    }
+
+    public void printAssignedResolverTicketDialog() {
+        System.out.println("Select a ticket to update.");
+        System.out.println("0.Cancel");
+    }
+
     public Pair<String, String> registerDialog() {
         System.out.println("Register: ");
         System.out.println("Username: ");
