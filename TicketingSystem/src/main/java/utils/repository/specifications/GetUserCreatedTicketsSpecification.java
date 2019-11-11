@@ -15,7 +15,7 @@ public class GetUserCreatedTicketsSpecification extends  SqlSpecification<User> 
     @Override
     public PreparedStatement getSpecification() throws SQLException {
         PreparedStatement statement = DatabaseConnection.getInstance().getConnection()
-                .prepareStatement("SELECT user_id, resolver_id, message, status FROM ticket WHERE user_id = ?");
+                .prepareStatement("SELECT id, user_id, resolver_id, message, status FROM ticket WHERE user_id = ?");
         statement.setInt(1, this.entity.getId());
         return statement;
     }

@@ -15,9 +15,10 @@ public class UpdateTicketSpecification extends SqlSpecification<Ticket> {
     @Override
     public PreparedStatement getSpecification() throws SQLException {
         PreparedStatement statement = DatabaseConnection.getInstance().getConnection()
-                .prepareStatement("UPDATE ticket SET status = ? WHERE id = ?");
+                .prepareStatement("UPDATE ticket SET status = ?, resolver_id = ? WHERE id = ?");
         statement.setString(1, this.entity.getStatus().toString().trim());
-        statement.setInt(2, this.entity.getId());
+        statement.setInt(2, this.entity.getResolverId());
+        statement.setInt(3, this.entity.getId());
         return statement;
     }
 }

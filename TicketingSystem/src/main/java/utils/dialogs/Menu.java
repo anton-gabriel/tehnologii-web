@@ -2,7 +2,9 @@ package utils.dialogs;
 
 import model.Ticket;
 import model.User;
+import server.Server;
 import utils.Pair;
+import utils.ServerPool;
 import utils.commands.UserCommand;
 import utils.enums.TicketStatus;
 import utils.enums.UserType;
@@ -33,7 +35,7 @@ public class Menu {
                     System.out.flush();
                     Pair<String, String> result = dialogs.loginDialog();
                     User user = userCommand.login(result.getKey(), result.getValue());
-                    if (user != null) {
+                    if ((user != null)) {
                         this.user = user;
                         if (this.user.getType() == UserType.USER) {
                             loadUserMenu();
@@ -47,7 +49,7 @@ public class Menu {
                     System.out.flush();
                     Pair<String, String> result = dialogs.registerDialog();
                     User user = userCommand.register(result.getKey(), result.getValue());
-                    if (user != null) {
+                    if ((user != null)) {
                         this.user = user;
                         if (this.user.getType() == UserType.USER) {
                             loadUserMenu();
@@ -114,9 +116,11 @@ public class Menu {
                 System.out.flush();
                 tickets.forEach(System.out::println);
                 dialogs.printAssignResolverTicketDialog();
-                choice = scanner.nextInt();
-                userCommand.assignResolverTicket(tickets.get(choice), this.user);
-            } while (choice != 0);
+                choice = scanner.nextInt() - 1;
+                if(choice >= 0) {
+                    userCommand.assignResolverTicket(tickets.get(choice), this.user);
+                }
+            } while (choice >= 0);
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
@@ -131,13 +135,16 @@ public class Menu {
                 System.out.flush();
                 tickets.forEach(System.out::println);
                 dialogs.printAssignedResolverTicketDialog();
-                choice = scanner.nextInt();
+                choice = scanner.nextInt() - 1;
+                if (choice >= 0) {
                 System.out.println("Enter desired status.");
-                status = TicketStatus.valueOf(scanner.nextLine().trim());
+                scanner.nextLine();
+                status = TicketStatus.valueOf(scanner.nextLine());
                 Ticket ticket = tickets.get(choice);
                 ticket.setStatus(status);
                 userCommand.updateTicket(ticket);
-            } while (choice != 0);
+            }
+            } while (choice >= 0);
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
         }

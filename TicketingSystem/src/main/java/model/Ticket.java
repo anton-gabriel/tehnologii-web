@@ -13,6 +13,7 @@ public class Ticket implements Serializable {
     private TicketStatus status;
 
     public Ticket(TicketBuilder builder) {
+        this.id = builder.id;
         this.userId = builder.userId;
         this.resolverId = builder.resolverId;
         this.message = builder.message;
@@ -63,6 +64,7 @@ public class Ticket implements Serializable {
 
     public static class TicketBuilder {
 
+        private int id;
         private int userId;
         private int resolverId;
         private String message;
@@ -81,6 +83,11 @@ public class Ticket implements Serializable {
 
         public TicketBuilder setStatus(TicketStatus status) {
             this.status = status;
+            return this;
+        }
+
+        public TicketBuilder setId(int id) {
+            this.id = id;
             return this;
         }
 

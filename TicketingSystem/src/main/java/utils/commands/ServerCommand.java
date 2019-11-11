@@ -21,7 +21,6 @@ public class ServerCommand {
 
     private UserRepository userRepository = new UserRepository();
     private TicketRepository ticketRepository = new TicketRepository();
-    private ServerPool serverPool = new ServerPool();
 
     public ServerCommand(ObjectInputStream in, ObjectOutputStream out) {
         this.in = in;
@@ -59,7 +58,7 @@ public class ServerCommand {
     private void login() {
         try {
             User user = (User) in.readObject();
-            if (this.serverPool.addUser((user))) {
+            if (ServerPool.getInstance().addUser((user))) {
                 User result = this.userRepository.login(user);
                 out.writeObject(result);
             } else {
@@ -74,7 +73,7 @@ public class ServerCommand {
     private void register() {
         try {
             User user = (User) in.readObject();
-            if (this.serverPool.addUser((user))) {
+            if (ServerPool.getInstance().addUser((user))) {
                 User result = this.userRepository.register(user);
                 out.writeObject(result);
             } else {
