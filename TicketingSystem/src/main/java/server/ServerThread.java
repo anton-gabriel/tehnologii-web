@@ -1,32 +1,39 @@
 package server;
 
-import java.io.BufferedReader;
+import utils.commands.ServerCommand;
+import utils.enums.Command;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ServerThread extends Thread {
 
-    String data = null;
-    Socket socket;
+    private ObjectInputStream in = null;
+    private ObjectOutputStream out = null;
+    private ServerCommand serverCommand;
+    private Socket socket;
 
     public ServerThread(Socket socket) {
         this.socket = socket;
+        try {
+            in = new ObjectInputStream(socket.getInputStream());
+            out = new ObjectOutputStream(socket.getOutputStream());
+            serverCommand = new ServerCommand(in, out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void run() {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-             PrintWriter writer = new PrintWriter(socket.getOutputStream())) {
-            data = reader.readLine();
-            while (data.compareTo("Cancel") != 0) {
-                //writer.println("Received: " + data);
-                writer.flush();
-                data = reader.readLine();
-            }
-        } catch (IOException exception) {
-            System.out.println(exception.getMessage());
-        } catch (NullPointerException exception) {
+        try {
+            Command command;
+            do {
+                command = (Command) in.readObject();
+                this.serverCommand.execute(command);
+            } while (command != Command.INVALID);
+        } catch (IOException | NullPointerException | ClassNotFoundException exception) {
             System.out.println(exception.getMessage());
         } finally {
             try {

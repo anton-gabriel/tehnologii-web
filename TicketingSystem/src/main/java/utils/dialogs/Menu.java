@@ -32,10 +32,13 @@ public class Menu {
                     System.out.flush();
                     Pair<String, String> result = dialogs.loginDialog();
                     User user = userCommand.login(result.getKey(), result.getValue());
-                    if ((user != null) && (user.getType() == UserType.USER)) {
-                        loadUserMenu();
-                    } else {
-                        loadResolverMenu();
+                    if (user != null) {
+                        this.user = user;
+                        if (user.getType() == UserType.USER) {
+                            loadUserMenu();
+                        } else {
+                            loadResolverMenu();
+                        }
                     }
                 }
                 break;
@@ -43,10 +46,13 @@ public class Menu {
                     System.out.flush();
                     Pair<String, String> result = dialogs.registerDialog();
                     User user = userCommand.register(result.getKey(), result.getValue());
-                    if ((user != null) && (user.getType() == UserType.USER)) {
-                        loadUserMenu();
-                    } else {
-                        loadResolverMenu();
+                    if (user != null) {
+                        this.user = user;
+                        if (user.getType() == UserType.USER) {
+                            loadUserMenu();
+                        } else {
+                            loadResolverMenu();
+                        }
                     }
                 }
                 break;
