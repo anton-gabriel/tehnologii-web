@@ -7,26 +7,24 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
- * The type Add user specification.
+ * The type Get user specification.
  */
-public class AddUserSpecification extends SqlSpecification<User> {
+public class GetUserSpecification extends  SqlSpecification<User> {
 
     /**
-     * Instantiates a new Add user specification.
+     * Instantiates a new Get user specification.
      *
      * @param entity the entity
      */
-    public AddUserSpecification(User entity) {
+    public GetUserSpecification(User entity) {
         super(entity);
     }
 
     @Override
     public PreparedStatement getSpecification() throws SQLException {
         PreparedStatement statement = DatabaseConnection.getInstance().getConnection()
-                .prepareStatement("INSERT INTO user_account(username, password, type) values (?,?,?)");
+                .prepareStatement("SELECT id, username, type FROM user_account WHERE username = ?");
         statement.setString(1, this.entity.getUsername().trim());
-        statement.setString(2, this.entity.getPassword().trim());
-        statement.setString(3, this.entity.getType().toString().trim());
         return statement;
     }
 }

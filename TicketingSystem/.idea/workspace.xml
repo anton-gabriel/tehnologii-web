@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_TEST_SOURCES" value="false" />
+    <option name="SCOPE_TYPE" value="8" />
+    <option name="CUSTOM_SCOPE_NAME" value="Project Files" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="b7f08903-b0e3-4b36-a8c7-f89de75bc2d4" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,7 +35,10 @@
     <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -122,7 +130,9 @@
       <workItem from="1573382881154" duration="28384000" />
       <workItem from="1573428314946" duration="2186000" />
       <workItem from="1573465853635" duration="2173000" />
-      <workItem from="1573468703687" duration="13784000" />
+      <workItem from="1573468703687" duration="16262000" />
+      <workItem from="1574018609289" duration="1886000" />
+      <workItem from="1574021808717" duration="1843000" />
     </task>
     <servers />
   </component>
@@ -147,32 +157,32 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/utils/commands/UserCommand.java</url>
-          <line>56</line>
+          <line>86</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/utils/dialogs/Menu.java</url>
-          <line>76</line>
+          <line>88</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/utils/commands/UserCommand.java</url>
-          <line>55</line>
+          <line>85</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/utils/commands/ServerCommand.java</url>
-          <line>89</line>
+          <line>114</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/utils/dialogs/Menu.java</url>
-          <line>120</line>
+          <line>132</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/utils/commands/ServerCommand.java</url>
-          <line>99</line>
+          <line>127</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>

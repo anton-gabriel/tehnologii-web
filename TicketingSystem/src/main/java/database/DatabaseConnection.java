@@ -2,6 +2,9 @@ package database;
 
 import java.sql.*;
 
+/**
+ * The type Database connection.
+ */
 public class DatabaseConnection {
 
     private static DatabaseConnection instance;
@@ -19,10 +22,21 @@ public class DatabaseConnection {
         }
     }
 
+    /**
+     * Gets connection.
+     *
+     * @return the connection
+     */
     public Connection getConnection() {
         return connection;
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     * @throws SQLException the sql exception
+     */
     public static DatabaseConnection getInstance() throws SQLException {
         if (instance == null) {
             instance = new DatabaseConnection();

@@ -14,6 +14,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.SQLException;
 
+/**
+ * The type Server command.
+ */
 public class ServerCommand {
 
     private ObjectInputStream in;
@@ -22,11 +25,22 @@ public class ServerCommand {
     private UserRepository userRepository = new UserRepository();
     private TicketRepository ticketRepository = new TicketRepository();
 
+    /**
+     * Instantiates a new Server command.
+     *
+     * @param in  the in
+     * @param out the out
+     */
     public ServerCommand(ObjectInputStream in, ObjectOutputStream out) {
         this.in = in;
         this.out = out;
     }
 
+    /**
+     * Execute the given command.
+     *
+     * @param command the command
+     */
     public void execute(Command command) {
         switch (command) {
             case INVALID:
@@ -55,6 +69,9 @@ public class ServerCommand {
         }
     }
 
+    /**
+     *  Gets the login credentials and return the result to the client.
+     */
     private void login() {
         try {
             User user = (User) in.readObject();
@@ -70,12 +87,17 @@ public class ServerCommand {
         }
     }
 
+    /**
+     *  Gets the register credentials and return the result to the client.
+     */
     private void register() {
         try {
             User user = (User) in.readObject();
             if (ServerPool.getInstance().addUser((user))) {
                 User result = this.userRepository.register(user);
-                out.writeObject(result);
+                if (result != null) {
+                    out.writeObject(this.userRepository.checkUser(user));
+                }
             } else {
                 out.writeObject(null);
             }
@@ -85,6 +107,9 @@ public class ServerCommand {
         }
     }
 
+    /**
+     *  Gets the ticket data and return the operation result to the client.
+     */
     private void createTicket() {
         try {
             Ticket ticket = (Ticket) in.readObject();
@@ -95,6 +120,9 @@ public class ServerCommand {
         }
     }
 
+    /**
+     *  Gets the ticket data and return the operation result to the client.
+     */
     private void updateTicket() {
         try {
             Ticket ticket = (Ticket) in.readObject();
@@ -105,6 +133,9 @@ public class ServerCommand {
         }
     }
 
+    /**
+     *  Gets the user data and return the available tickets to the client.
+     */
     private void getAvailableTickets() {
         try {
             User user = (User) in.readObject();
@@ -115,6 +146,9 @@ public class ServerCommand {
         }
     }
 
+    /**
+     *  Gets the user data and return the created tickets to the client.
+     */
     private void getCreatedTickets() {
         try {
             User user = (User) in.readObject();
@@ -125,6 +159,9 @@ public class ServerCommand {
         }
     }
 
+    /**
+     *  Gets the resolver data and return the selected tickets to the client.
+     */
     private void getResolverTickets() {
         try {
             User user = (User) in.readObject();

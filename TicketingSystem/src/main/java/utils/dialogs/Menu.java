@@ -14,16 +14,28 @@ import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The type Menu.
+ */
 public class Menu {
 
     private User user = null;
     private Dialogs dialogs = new Dialogs();
     private UserCommand userCommand;
 
+    /**
+     * Instantiates a new Menu.
+     *
+     * @param in  the in
+     * @param out the out
+     */
     public Menu(ObjectInputStream in, ObjectOutputStream out) {
         this.userCommand = new UserCommand(in, out);
     }
 
+    /**
+     * Load menu.
+     */
     public void loadMenu() {
         Scanner scan = new Scanner(System.in);
         String choice;

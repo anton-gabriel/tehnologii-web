@@ -7,8 +7,16 @@ import utils.enums.TicketStatus;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * The type Get user created tickets specification.
+ */
 public class GetUserCreatedTicketsSpecification extends  SqlSpecification<User> {
 
+    /**
+     * Instantiates a new Get user created tickets specification.
+     *
+     * @param entity the entity
+     */
     public GetUserCreatedTicketsSpecification(User entity) {
         super(entity);
     }

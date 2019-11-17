@@ -9,6 +9,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 
+/**
+ * The type Server thread.
+ */
 public class ServerThread extends Thread {
 
     private ObjectInputStream in = null;
@@ -16,6 +19,11 @@ public class ServerThread extends Thread {
     private ServerCommand serverCommand;
     private Socket socket;
 
+    /**
+     * Instantiates a new Server thread.
+     *
+     * @param socket the socket
+     */
     public ServerThread(Socket socket) {
         this.socket = socket;
         try {
@@ -27,6 +35,7 @@ public class ServerThread extends Thread {
         }
     }
 
+    @Override
     public void run() {
         try {
             Command command;

@@ -6,8 +6,16 @@ import model.User;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * The type Login specification.
+ */
 public class LoginSpecification extends SqlSpecification<User> {
 
+    /**
+     * Instantiates a new Login specification.
+     *
+     * @param entity the entity
+     */
     public LoginSpecification(User entity) {
         super(entity);
     }

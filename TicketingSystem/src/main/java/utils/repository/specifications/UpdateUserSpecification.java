@@ -6,8 +6,16 @@ import model.User;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * The type Update user specification.
+ */
 public class UpdateUserSpecification extends SqlSpecification<User> {
 
+    /**
+     * Instantiates a new Update user specification.
+     *
+     * @param entity the entity
+     */
     public UpdateUserSpecification(User entity) {
         super(entity);
     }

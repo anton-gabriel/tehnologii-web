@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * The type Ticket repository.
+ */
 public class TicketRepository extends Repository<Ticket> implements ITicketRepository {
     @Override
     public Collection<Ticket> getResolverTickets(User user) throws SQLException {

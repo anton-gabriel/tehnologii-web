@@ -6,8 +6,16 @@ import model.User;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * The type Remove user specification.
+ */
 public class RemoveUserSpecification extends SqlSpecification<User> {
 
+    /**
+     * Instantiates a new Remove user specification.
+     *
+     * @param entity the entity
+     */
     public RemoveUserSpecification(User entity) {
         super(entity);
     }

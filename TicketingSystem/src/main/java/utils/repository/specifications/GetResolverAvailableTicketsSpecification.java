@@ -7,8 +7,16 @@ import utils.enums.TicketStatus;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * The type Get resolver available tickets specification.
+ */
 public class GetResolverAvailableTicketsSpecification extends  SqlSpecification<User> {
 
+    /**
+     * Instantiates a new Get resolver available tickets specification.
+     *
+     * @param entity the entity
+     */
     public GetResolverAvailableTicketsSpecification(User entity) {
         super(entity);
     }

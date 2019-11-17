@@ -6,8 +6,16 @@ import model.Ticket;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * The type Update ticket specification.
+ */
 public class UpdateTicketSpecification extends SqlSpecification<Ticket> {
 
+    /**
+     * Instantiates a new Update ticket specification.
+     *
+     * @param entity the entity
+     */
     public UpdateTicketSpecification(Ticket entity) {
         super(entity);
     }

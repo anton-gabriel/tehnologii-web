@@ -7,8 +7,16 @@ import utils.enums.TicketStatus;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * The type Get resolver tickets specification.
+ */
 public class GetResolverTicketsSpecification extends SqlSpecification<User> {
 
+    /**
+     * Instantiates a new Get resolver tickets specification.
+     *
+     * @param entity the entity
+     */
     public GetResolverTicketsSpecification(User entity) {
         super(entity);
     }
