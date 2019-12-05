@@ -1,0 +1,10 @@
+create database macao;
+
+create table user_account (
+ id SERIAL primary key not null,
+ username char(32) not null,
+ password char(32) not null);
+ 
+ \c - connect to db
+ \l - list all db
+ \d - list all tables from current db
