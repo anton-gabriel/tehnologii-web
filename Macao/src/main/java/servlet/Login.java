@@ -41,10 +41,10 @@ public class Login extends HttpServlet {
         try {
             User login = userRepository.login(new User.UserBuilder(username).setPassword(password).build());
             if (login != null) {
-                ServletContext context = getServletContext();
                 RequestDispatcher requestDispatcher = req.getRequestDispatcher("success.jsp");
 
                 //sends the username to session
+                //create the session
                 req.getSession().setAttribute("user", username);
                 requestDispatcher.forward(req, resp);
             }

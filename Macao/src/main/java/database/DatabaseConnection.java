@@ -9,7 +9,7 @@ public class DatabaseConnection {
 
     private static DatabaseConnection instance;
     private Connection connection;
-    private String url = "jdbc:postgresql://localhost:5432/ticketing";
+    private String url = "jdbc:postgresql://localhost:5432/macao";
     private String username = "postgres";
     private String password = "123456";
 
