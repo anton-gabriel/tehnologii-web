@@ -46,8 +46,7 @@ public class Deck {
                 deck.add(new StandardCard(cardNumber, cardSymbol));
             });
         });
-        deck.add(new JokerCard(CardColor.BLACK));
-        deck.add(new JokerCard(CardColor.RED));
+        CardColor.stream().forEach(cardColor -> deck.add(new JokerCard(cardColor)));
         return deck;
     }
 

@@ -1,9 +1,9 @@
 package utils.collections;
 
-import game.StandardCard;
+import game.Card;
 
 import java.util.ArrayList;
 
-public class CardsHand extends ArrayList<StandardCard> {
+public class CardsHand extends ArrayList<Card> {
 
 }
