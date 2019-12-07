@@ -5,23 +5,36 @@ import utils.repository.specifications.SqlSpecification;
 import java.sql.SQLException;
 
 /**
- * The type Repository.
+ * The interface Repository.
  *
  * @param <T> the type parameter
  */
-public class Repository<T> implements IRepository<T> {
-    @Override
-    public int add(SqlSpecification<T> specification) throws SQLException {
-        return specification.getSpecification().executeUpdate();
-    }
+public interface Repository<T> {
 
-    @Override
-    public int update(SqlSpecification<T> specification) throws SQLException {
-        return specification.getSpecification().executeUpdate();
-    }
+    /**
+     * Add command.
+     *
+     * @param specification the specification
+     * @return the number of added entities
+     * @throws SQLException the sql exception
+     */
+    int add(SqlSpecification<T> specification) throws SQLException;
 
-    @Override
-    public int remove(SqlSpecification<T> specification) throws SQLException {
-        return specification.getSpecification().executeUpdate();
-    }
+    /**
+     * Update command.
+     *
+     * @param specification the specification
+     * @return the number of updated entities
+     * @throws SQLException the sql exception
+     */
+    int update(SqlSpecification<T> specification) throws SQLException;
+
+    /**
+     * Remove command.
+     *
+     * @param specification the specification
+     * @return the number of removed entities
+     * @throws SQLException the sql exception
+     */
+    int remove(SqlSpecification<T> specification) throws SQLException;
 }

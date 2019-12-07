@@ -1,5 +1,7 @@
 package utils.enums;
 
+import java.util.stream.Stream;
+
 /**
  * The enum Card number.
  */
@@ -55,5 +57,14 @@ public enum CardNumber {
     /**
      * King card number.
      */
-    KING
+    KING;
+
+    /**
+     * Stream stream.
+     *
+     * @return the stream
+     */
+    public static Stream<CardNumber> stream() {
+        return Stream.of(CardNumber.values());
+    }
 }

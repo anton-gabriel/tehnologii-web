@@ -1,5 +1,7 @@
 package utils.enums;
 
+import java.util.stream.Stream;
+
 /**
  * The enum Card symbol.
  */
@@ -19,5 +21,14 @@ public enum CardSymbol {
     /**
      * Spades card symbol.
      */
-    SPADES
+    SPADES;
+
+    /**
+     * Stream stream.
+     *
+     * @return the stream
+     */
+    public static Stream<CardSymbol> stream() {
+        return Stream.of(CardSymbol.values());
+    }
 }

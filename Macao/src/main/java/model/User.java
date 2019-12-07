@@ -89,7 +89,7 @@ public class User implements Serializable {
          * Sets password.
          *
          * @param password the password
-         * @return the password
+         * @return the UserBuilder reference
          */
         public UserBuilder setPassword(String password) {
             this.password = password;
@@ -100,7 +100,7 @@ public class User implements Serializable {
          * Sets id.
          *
          * @param id the id
-         * @return the id
+         * @return the UserBuilder reference
          */
         public UserBuilder setId(int id) {
             this.id = id;

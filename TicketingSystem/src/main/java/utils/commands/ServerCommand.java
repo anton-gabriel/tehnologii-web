@@ -4,8 +4,8 @@ import model.Ticket;
 import model.User;
 import utils.ServerPool;
 import utils.enums.Command;
-import utils.repository.TicketRepository;
-import utils.repository.UserRepository;
+import utils.repository.TicketRepositoryBase;
+import utils.repository.UserRepositoryBase;
 import utils.repository.specifications.AddTicketSpecification;
 import utils.repository.specifications.UpdateTicketSpecification;
 
@@ -22,8 +22,8 @@ public class ServerCommand {
     private ObjectInputStream in;
     private ObjectOutputStream out;
 
-    private UserRepository userRepository = new UserRepository();
-    private TicketRepository ticketRepository = new TicketRepository();
+    private UserRepositoryBase userRepository = new UserRepositoryBase();
+    private TicketRepositoryBase ticketRepository = new TicketRepositoryBase();
 
     /**
      * Instantiates a new Server command.
