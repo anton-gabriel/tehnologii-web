@@ -22,6 +22,8 @@ public class Player {
      */
     public Player(User user) {
         this.user = user;
+        this.cards = new CardsHand();
+        this.status = PlayerStatus.ATTENDING;
     }
 
     /**

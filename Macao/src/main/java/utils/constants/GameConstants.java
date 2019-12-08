@@ -9,6 +9,10 @@ public class GameConstants {
      */
     public static final int INITIAL_PLAYER_WINS = 0;
     /**
+     * The constant INITIAL_PLAYER.
+     */
+    public static final int INITIAL_PLAYER = 0;
+    /**
      * The constant MINIMUM_PLAYERS.
      */
     public static final int MINIMUM_PLAYERS = 2;
@@ -16,5 +20,10 @@ public class GameConstants {
      * The constant MAXIMUM_PLAYERS.
      */
     public static final int MAXIMUM_PLAYERS = 6;
+
+    /**
+     * The constant START_CARDS.
+     */
+    public static final int START_CARDS = 5;
 
 }

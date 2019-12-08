@@ -1,6 +1,9 @@
 package game;
 
 import utils.collections.PlayerList;
+import utils.constants.GameConstants;
+
+import java.util.stream.IntStream;
 
 /**
  * The type Game room.
@@ -10,6 +13,8 @@ public class GameRoom {
     private PlayerList players;
     private Deck deck;
     private Player gameOwner;
+    private Card currentCard;
+
 
     /**
      * Instantiates a new Game room.
@@ -41,6 +46,13 @@ public class GameRoom {
     public boolean addPlayer(Player player) {
         //add the player if the MAXIMUM_PLAYERS values is not reached
         return false;
+    }
+
+    private void dealCards() {
+        for (Player player : players) {
+            IntStream.range(0, GameConstants.START_CARDS).
+                    forEach(card -> player.getCards().add(deck.getCard()));
+        }
     }
 
     /**
@@ -95,5 +107,23 @@ public class GameRoom {
      */
     public void setGameOwner(Player gameOwner) {
         this.gameOwner = gameOwner;
+    }
+
+    /**
+     * Gets current card.
+     *
+     * @return the current card
+     */
+    public Card getCurrentCard() {
+        return currentCard;
+    }
+
+    /**
+     * Sets current card.
+     *
+     * @param currentCard the current card
+     */
+    public void setCurrentCard(Card currentCard) {
+        this.currentCard = currentCard;
     }
 }
