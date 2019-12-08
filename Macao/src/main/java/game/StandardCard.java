@@ -61,8 +61,12 @@ public class StandardCard implements Card {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         StandardCard that = (StandardCard) o;
         return cardNumber == that.cardNumber &&
                 cardSymbol == that.cardSymbol;

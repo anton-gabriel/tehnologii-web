@@ -23,6 +23,15 @@ public class PlayerList extends ArrayList<Player> {
     }
 
     /**
+     * Gets current player.
+     *
+     * @return the current player
+     */
+    public Player getCurrentPlayer() {
+        return super.get(this.currentPlayer);
+    }
+
+    /**
      * Gets next player.
      *
      * @return the next player

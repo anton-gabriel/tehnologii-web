@@ -1,5 +1,7 @@
 package utils.enums;
 
+import utils.constants.CardsValues;
+
 import java.util.stream.Stream;
 
 /**
@@ -9,55 +11,61 @@ public enum CardNumber {
     /**
      * Ace card number.
      */
-    ACE,
+    ACE(CardsValues.ACE),
     /**
      * Two card number.
      */
-    TWO,
+    TWO(CardsValues.TWO),
     /**
      * Three card number.
      */
-    THREE,
+    THREE(CardsValues.THREE),
     /**
      * Four card number.
      */
-    FOUR,
+    FOUR(CardsValues.FOUR),
     /**
      * Five card number.
      */
-    FIVE,
+    FIVE(CardsValues.FIVE),
     /**
      * Six card number.
      */
-    SIX,
+    SIX(CardsValues.SIX),
     /**
      * Seven card number.
      */
-    SEVEN,
+    SEVEN(CardsValues.SEVEN),
     /**
      * Eight card number.
      */
-    EIGHT,
+    EIGHT(CardsValues.EIGHT),
     /**
      * Nine card number.
      */
-    NINE,
+    NINE(CardsValues.NINE),
     /**
      * Ten card number.
      */
-    TEN,
+    TEN(CardsValues.TEN),
     /**
      * Jack card number.
      */
-    JACK,
+    JACK(CardsValues.JACK),
     /**
      * Queen card number.
      */
-    QUEEN,
+    QUEEN(CardsValues.QUEEN),
     /**
      * King card number.
      */
-    KING;
+    KING(CardsValues.KING);
+
+    private int value;
+
+    CardNumber(int value) {
+        this.value = value;
+    }
 
     /**
      * Stream stream.
@@ -67,4 +75,23 @@ public enum CardNumber {
     public static Stream<CardNumber> stream() {
         return Stream.of(CardNumber.values());
     }
+
+    /**
+     * Gets value.
+     *
+     * @return the value
+     */
+    public int getValue() {
+        return value;
+    }
+
+    /**
+     * Sets value.
+     *
+     * @param value the value
+     */
+    public void setValue(int value) {
+        this.value = value;
+    }
+
 }

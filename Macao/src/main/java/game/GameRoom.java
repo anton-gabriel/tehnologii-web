@@ -35,6 +35,12 @@ public class GameRoom {
      */
     public boolean startGame() {
         //start the game if number of players is greater than MINIMUM_PLAYERS
+        if (this.players.size() >= GameConstants.MINIMUM_PLAYERS) {
+            dealCards();
+            //while game is not over, play players turns
+
+            return true;
+        }
         return false;
     }
 
@@ -46,14 +52,19 @@ public class GameRoom {
      */
     public boolean addPlayer(Player player) {
         //add the player if the MAXIMUM_PLAYERS values is not reached
+        if (this.players.size() < GameConstants.MAXIMUM_PLAYERS) {
+            this.players.add(player);
+            return true;
+        }
         return false;
     }
 
     private void dealCards() {
         for (Player player : players) {
             IntStream.range(0, GameConstants.START_CARDS).
-                    forEach(card -> player.getCards().add(deck.getCard()));
+                    forEach(card -> player.getCards().add(this.deck.getCard()));
         }
+        this.currentCard = this.deck.getCard();
     }
 
     /**
@@ -130,8 +141,12 @@ public class GameRoom {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         GameRoom gameRoom = (GameRoom) o;
         return players.equals(gameRoom.players);
     }
