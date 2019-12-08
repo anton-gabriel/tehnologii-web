@@ -2,6 +2,8 @@ package game;
 
 import utils.enums.CardColor;
 
+import java.util.Objects;
+
 /**
  * The type Joker card.
  */
@@ -33,5 +35,18 @@ public class JokerCard implements Card {
      */
     public void setCardColor(CardColor cardColor) {
         this.cardColor = cardColor;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JokerCard jokerCard = (JokerCard) o;
+        return cardColor == jokerCard.cardColor;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cardColor);
     }
 }

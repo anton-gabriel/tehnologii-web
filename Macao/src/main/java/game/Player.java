@@ -5,6 +5,8 @@ import utils.collections.CardsHand;
 import utils.constants.GameConstants;
 import utils.enums.PlayerStatus;
 
+import java.util.Objects;
+
 /**
  * The type Player.
  */
@@ -119,5 +121,21 @@ public class Player {
      */
     public void setCards(CardsHand cards) {
         this.cards = cards;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return numberOfWins == player.numberOfWins &&
+                user.equals(player.user) &&
+                status == player.status &&
+                Objects.equals(cards, player.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(user, status, cards, numberOfWins);
     }
 }

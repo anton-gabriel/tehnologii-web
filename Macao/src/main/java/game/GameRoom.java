@@ -3,6 +3,7 @@ package game;
 import utils.collections.PlayerList;
 import utils.constants.GameConstants;
 
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 /**
@@ -24,7 +25,7 @@ public class GameRoom {
     public GameRoom(Player gameOwner) {
         this.gameOwner = gameOwner;
         this.deck = new Deck();
-        this.players = new PlayerList();
+        this.players = new PlayerList(this.gameOwner);
     }
 
     /**
@@ -125,5 +126,18 @@ public class GameRoom {
      */
     public void setCurrentCard(Card currentCard) {
         this.currentCard = currentCard;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameRoom gameRoom = (GameRoom) o;
+        return players.equals(gameRoom.players);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(players);
     }
 }

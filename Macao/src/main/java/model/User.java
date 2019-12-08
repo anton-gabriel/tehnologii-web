@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * The type User.
@@ -122,6 +123,20 @@ public class User implements Serializable {
                     id, username);
         }
 
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            UserBuilder that = (UserBuilder) o;
+            return id == that.id &&
+                    Objects.equals(password, that.password) &&
+                    username.equals(that.username);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id, password, username);
+        }
     }
 }
 
