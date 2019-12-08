@@ -56,4 +56,12 @@ public class CardsValues {
      * The constant KING.
      */
     public static final int KING = 13;
+    /**
+     * The constant RED_JOKER.
+     */
+    public static final int RED_JOKER = 10;
+    /**
+     * The constant BLACK_JOKER.
+     */
+    public static final int BLACK_JOKER = 5;
 }

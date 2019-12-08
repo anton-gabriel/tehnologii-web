@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * The type Joker card.
  */
-public class JokerCard implements Card {
+public final class JokerCard implements Card {
     private CardColor cardColor;
 
     /**

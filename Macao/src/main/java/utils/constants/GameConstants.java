@@ -9,9 +9,9 @@ public class GameConstants {
      */
     public static final int INITIAL_PLAYER_WINS = 0;
     /**
-     * The constant INITIAL_PLAYER.
+     * The constant INITIAL_STACKED_CARDS.
      */
-    public static final int INITIAL_PLAYER = 0;
+    public static final int INITIAL_STACKED_CARDS = 0;
     /**
      * The constant MINIMUM_PLAYERS.
      */

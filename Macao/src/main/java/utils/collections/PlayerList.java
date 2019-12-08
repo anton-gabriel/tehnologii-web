@@ -32,6 +32,15 @@ public class PlayerList extends ArrayList<Player> {
     }
 
     /**
+     * Peek next player.
+     *
+     * @return the player
+     */
+    public Player peekNextPlayer() {
+        return super.get((this.currentPlayer + 1) % super.size());
+    }
+
+    /**
      * Gets next player.
      *
      * @return the next player

@@ -15,7 +15,7 @@ public class GameRoom {
     private Deck deck;
     private Player gameOwner;
     private Card currentCard;
-
+    private StackedDrawCards stackedDrawCards;
 
     /**
      * Instantiates a new Game room.
@@ -26,6 +26,7 @@ public class GameRoom {
         this.gameOwner = gameOwner;
         this.deck = new Deck();
         this.players = new PlayerList(this.gameOwner);
+        this.stackedDrawCards = new StackedDrawCards();
     }
 
     /**
@@ -138,6 +139,25 @@ public class GameRoom {
     public void setCurrentCard(Card currentCard) {
         this.currentCard = currentCard;
     }
+
+    /**
+     * Gets stacked draw cards.
+     *
+     * @return the stacked draw cards
+     */
+    public StackedDrawCards getStackedDrawCards() {
+        return stackedDrawCards;
+    }
+
+    /**
+     * Sets stacked draw cards.
+     *
+     * @param stackedDrawCards the stacked draw cards
+     */
+    public void setStackedDrawCards(StackedDrawCards stackedDrawCards) {
+        this.stackedDrawCards = stackedDrawCards;
+    }
+
 
     @Override
     public boolean equals(Object o) {
