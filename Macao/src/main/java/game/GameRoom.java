@@ -4,6 +4,7 @@ import utils.collections.PlayerList;
 import utils.constants.GameConstants;
 
 import java.util.Objects;
+import java.util.UUID;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
@@ -13,6 +14,7 @@ import java.util.stream.IntStream;
  */
 public class GameRoom {
 
+    private UUID id;
     private PlayerList players;
     private Deck deck;
     private Player gameOwner;
@@ -27,6 +29,7 @@ public class GameRoom {
      * @param gameOwner the game owner
      */
     public GameRoom(Player gameOwner) {
+        this.id = UUID.randomUUID();
         this.gameOwner = gameOwner;
         this.deck = new Deck();
         this.players = new PlayerList(this.gameOwner);
@@ -163,6 +166,23 @@ public class GameRoom {
         this.stackedDrawCards = stackedDrawCards;
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
+    public UUID getId() {
+        return id;
+    }
+
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -173,11 +193,11 @@ public class GameRoom {
             return false;
         }
         GameRoom gameRoom = (GameRoom) o;
-        return players.equals(gameRoom.players);
+        return id.equals(gameRoom.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(players);
+        return Objects.hash(id);
     }
 }
