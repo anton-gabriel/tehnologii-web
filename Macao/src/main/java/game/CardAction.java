@@ -13,7 +13,7 @@ import java.util.function.Function;
 public final class CardAction {
 
     /**
-     * Gets action.
+     * Gets the specific action for a card.
      *
      * @param card the card
      * @param room the room

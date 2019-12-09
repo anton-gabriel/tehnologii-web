@@ -1,40 +1,19 @@
-package servlet;
+package controller;
 
 import model.User;
 import repository.UserRepository;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-/**
- * The type Login.
- */
-@WebServlet(name = "login",
-        urlPatterns = {"/login"},
-        loadOnStartup = 1)
-public class Login extends HttpServlet {
-
-    /**
-     * Instantiates a new Login.
-     */
-    public Login() {
-        super();
-    }
+public class LoginController implements Controller {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void process(HttpServletRequest req, HttpServletResponse resp) {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         UserRepository userRepository = new UserRepository();
@@ -50,8 +29,11 @@ public class Login extends HttpServlet {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
     }
 
 

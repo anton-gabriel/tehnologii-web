@@ -4,7 +4,9 @@ import utils.collections.PlayerList;
 import utils.constants.GameConstants;
 
 import java.util.Objects;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
+
 
 /**
  * The type Game room.
@@ -17,6 +19,8 @@ public class GameRoom {
     private Card currentCard;
     private StackedDrawCards stackedDrawCards;
 
+    private Logger logger = Logger.getLogger(GameRoom.class.getName());
+
     /**
      * Instantiates a new Game room.
      *
@@ -27,6 +31,7 @@ public class GameRoom {
         this.deck = new Deck();
         this.players = new PlayerList(this.gameOwner);
         this.stackedDrawCards = new StackedDrawCards();
+        this.logger.info(String.format("%s created with id = ", GameRoom.class.getName()));
     }
 
     /**
