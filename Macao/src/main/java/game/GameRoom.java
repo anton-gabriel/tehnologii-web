@@ -34,7 +34,7 @@ public class GameRoom {
         this.deck = new Deck();
         this.players = new PlayerList(this.gameOwner);
         this.stackedDrawCards = new StackedDrawCards();
-        this.logger.info(String.format("%s created with id = ", GameRoom.class.getName()));
+        this.logger.info(String.format("%s created with id = %s", GameRoom.class.getName(),this.id.toString()));
     }
 
     /**
