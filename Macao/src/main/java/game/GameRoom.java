@@ -2,7 +2,9 @@ package game;
 
 import utils.collections.PlayerList;
 import utils.constants.GameConstants;
+import utils.enums.GameStatus;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -16,10 +18,13 @@ public class GameRoom {
 
     private UUID id;
     private PlayerList players;
+    private ArrayList<Player> spectators;
+
     private Deck deck;
     private Player gameOwner;
     private Card currentCard;
     private StackedDrawCards stackedDrawCards;
+    private GameStatus status;
 
     private Logger logger = Logger.getLogger(GameRoom.class.getName());
 
@@ -32,8 +37,10 @@ public class GameRoom {
         this.id = UUID.randomUUID();
         this.gameOwner = gameOwner;
         this.deck = new Deck();
+        this.spectators = new ArrayList<Player>();
         this.players = new PlayerList(this.gameOwner);
         this.stackedDrawCards = new StackedDrawCards();
+        this.status = GameStatus.INACTIVE;
         this.logger.info(String.format("%s created with id = ", GameRoom.class.getName()));
     }
 
@@ -61,7 +68,7 @@ public class GameRoom {
      */
     public boolean addPlayer(Player player) {
         //add the player if the MAXIMUM_PLAYERS values is not reached
-        if (this.players.size() < GameConstants.MAXIMUM_PLAYERS) {
+        if (this.players.size() < GameConstants.MAXIMUM_PLAYERS && !this.players.contains(player)) {
             this.players.add(player);
             return true;
         }
@@ -183,6 +190,23 @@ public class GameRoom {
     public void setId(UUID id) {
         this.id = id;
     }
+
+    public ArrayList<Player> getSpectators() {
+        return spectators;
+    }
+
+    public void setSpectators(ArrayList<Player> spectators) {
+        this.spectators = spectators;
+    }
+
+    public GameStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(GameStatus status) {
+        this.status = status;
+    }
+
 
     @Override
     public boolean equals(Object o) {

@@ -1,6 +1,5 @@
 package game;
 
-import javafx.scene.paint.Color;
 import utils.constants.CardsValues;
 import utils.enums.CardColor;
 import utils.enums.CardNumber;
@@ -76,7 +75,7 @@ public final class CardAction {
         if (color.equals(CardColor.BLACK)) {
             room.getStackedDrawCards().addCards(CardsValues.BLACK_JOKER);
             return removeCard(card, room);
-        } else if (color.equals(Color.RED)) {
+        } else if (color.equals(CardColor.RED)) {
             room.getStackedDrawCards().addCards(CardsValues.RED_JOKER);
             return removeCard(card, room);
         }

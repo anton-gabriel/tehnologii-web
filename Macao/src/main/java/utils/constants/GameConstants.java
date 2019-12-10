@@ -26,4 +26,8 @@ public class GameConstants {
      */
     public static final int START_CARDS = 5;
 
+    public static final int GAME_STATUS_INACTIVE = 0;
+    public static final int GAME_STATUS_ACTIVE = 1;
+    public static final int GAME_STATUS_FINISHED = 2;
+
 }
