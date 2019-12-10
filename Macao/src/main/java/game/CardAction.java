@@ -6,6 +6,7 @@ import utils.enums.CardNumber;
 import utils.enums.CardSymbol;
 import validators.CardValidator;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -20,42 +21,42 @@ public final class CardAction {
      * @param room the room
      * @return the action
      */
-    public static Function<GameRoom, Boolean> getAction(Card card, GameRoom room) {
+    public static BiFunction<Card, GameRoom, Boolean> getAction(Card card, GameRoom room) {
         if (card instanceof StandardCard) {
             return getStandardCardAction((StandardCard) card, room);
         } else if (card instanceof JokerCard) {
             return getJokerAction((JokerCard) card, room);
         }
-        return gameRoom -> applyInvalidAction();
+        return (gameCard, game) -> applyInvalidAction();
     }
 
-    private static Function<GameRoom, Boolean> getStandardCardAction(StandardCard card, GameRoom room) {
+    private static BiFunction<Card, GameRoom, Boolean> getStandardCardAction(StandardCard card, GameRoom room) {
         switch (card.getCardNumber()) {
             case TWO:
             case THREE:
-                return gameRoom -> applyDrawAction(card, room);
+                return (gameCard, game) -> applyDrawAction(card, room);
             case FOUR:
-                return gameRoom -> applyStopAction(card, room);
+                return (gameCard, game) -> applyStopAction(card, room);
             case SEVEN:
-                return gameRoom -> applyChangeCardAction(card, room);
+                return (gameCard, game) -> applyChangeCardAction(card, room);
             default:
                 if (CardValidator.isCardValid(card, room)) {
-                    return gameRoom -> applyStandardAction(card, room);
+                    return (gameCard, game) -> applyStandardAction(card, room);
                 }
         }
-        return gameRoom -> applyInvalidAction();
+        return (gameCard, game) -> applyInvalidAction();
     }
 
-    private static Function<GameRoom, Boolean> getJokerAction(JokerCard card, GameRoom room) {
+    private static BiFunction<Card, GameRoom, Boolean> getJokerAction(JokerCard card, GameRoom room) {
         switch (card.getCardColor()) {
             case BLACK:
             case RED:
                 if (CardValidator.isJokerValid(card, room)) {
-                    return gameRoom -> applyJokerAction(card, room);
+                    return (gameCard, game) -> applyJokerAction(card, room);
 
                 }
         }
-        return gameRoom -> applyInvalidAction();
+        return (gameCard, game) -> applyInvalidAction();
     }
 
     private static Boolean applyStandardAction(StandardCard card, GameRoom room) {

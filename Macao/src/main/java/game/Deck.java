@@ -58,4 +58,22 @@ public class Deck {
     private void shuffle(ArrayList<Card> deck) {
         Collections.shuffle(deck);
     }
+
+    /**
+     * Gets cards.
+     *
+     * @return the cards
+     */
+    public Queue<Card> getCards() {
+        return cards;
+    }
+
+    /**
+     * Sets cards.
+     *
+     * @param cards the cards
+     */
+    public void setCards(Queue<Card> cards) {
+        this.cards = cards;
+    }
 }
