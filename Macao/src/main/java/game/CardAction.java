@@ -3,6 +3,8 @@ package game;
 import javafx.scene.paint.Color;
 import utils.constants.CardsValues;
 import utils.enums.CardColor;
+import utils.enums.CardNumber;
+import utils.enums.CardSymbol;
 import validators.CardValidator;
 
 import java.util.function.Function;
@@ -49,45 +51,53 @@ public final class CardAction {
         switch (card.getCardColor()) {
             case BLACK:
             case RED:
-                return gameRoom -> applyJokerAction(card, room);
+                if (CardValidator.isJokerValid(card, room)) {
+                    return gameRoom -> applyJokerAction(card, room);
+
+                }
         }
         return gameRoom -> applyInvalidAction();
     }
 
     private static Boolean applyStandardAction(StandardCard card, GameRoom room) {
-        if (room.getPlayers().getCurrentPlayer().getCards().remove(card)) {
-            room.setCurrentCard(card);
-            return true;
-        }
-        return false;
+        return removeCard(card, room);
     }
 
     private static Boolean applyDrawAction(StandardCard card, GameRoom room) {
-        return room.getStackedDrawCards().addCards(card.getCardNumber().getValue());
+        return room.getStackedDrawCards().addCards(card.getCardNumber().getValue()) ? removeCard(card, room) : Boolean.valueOf(false);
     }
 
     private static Boolean applyStopAction(StandardCard card, GameRoom room) {
-        return room.getStackedDrawCards().clear();
+        return room.getStackedDrawCards().clear() ? removeCard(card, room) : Boolean.valueOf(false);
     }
 
     private static Boolean applyJokerAction(JokerCard card, GameRoom room) {
         CardColor color = card.getCardColor();
         if (color.equals(CardColor.BLACK)) {
             room.getStackedDrawCards().addCards(CardsValues.BLACK_JOKER);
-            return true;
+            return removeCard(card, room);
         } else if (color.equals(Color.RED)) {
             room.getStackedDrawCards().addCards(CardsValues.RED_JOKER);
-            return true;
+            return removeCard(card, room);
         }
         return false;
     }
 
     private static Boolean applyChangeCardAction(StandardCard card, GameRoom room) {
-        room.setCurrentCard(card);
-        return true;
+        CardSymbol symbol = room.getPlayers().getCurrentPlayer().getDesiredCardSymbol();
+        room.setCurrentCard(new StandardCard(CardNumber.SEVEN, symbol));
+        return removeCard(card, room);
     }
 
     private static Boolean applyInvalidAction() {
+        return false;
+    }
+
+    private static Boolean removeCard(Card card, GameRoom room) {
+        if (room.getPlayers().getCurrentPlayer().getCards().remove(card)) {
+            room.setCurrentCard(card);
+            return true;
+        }
         return false;
     }
 }

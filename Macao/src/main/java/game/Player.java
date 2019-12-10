@@ -3,6 +3,7 @@ package game;
 import model.User;
 import utils.collections.CardsHand;
 import utils.constants.GameConstants;
+import utils.enums.CardSymbol;
 import utils.enums.PlayerStatus;
 
 import java.util.Objects;
@@ -15,6 +16,7 @@ public class Player {
     private User user;
     private PlayerStatus status;
     private CardsHand cards;
+    private CardSymbol desiredCardSymbol;
     private int numberOfWins = GameConstants.INITIAL_PLAYER_WINS;
 
     /**
@@ -43,6 +45,12 @@ public class Player {
         return false;
     }
 
+    /**
+     * Play card boolean.
+     *
+     * @param index the index
+     * @return the boolean
+     */
     public boolean playCard(int index) {
         //1. Check if the card exists in player hand
         //2. Check if the card is "playable"
@@ -121,6 +129,24 @@ public class Player {
      */
     public void setCards(CardsHand cards) {
         this.cards = cards;
+    }
+
+    /**
+     * Gets desired card symbol.
+     *
+     * @return the desired card symbol
+     */
+    public CardSymbol getDesiredCardSymbol() {
+        return desiredCardSymbol;
+    }
+
+    /**
+     * Sets desired card symbol.
+     *
+     * @param desiredCardSymbol the desired card symbol
+     */
+    public void setDesiredCardSymbol(CardSymbol desiredCardSymbol) {
+        this.desiredCardSymbol = desiredCardSymbol;
     }
 
     @Override

@@ -68,6 +68,25 @@ public class User implements Serializable {
         this.username = username;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return id == user.id &&
+                Objects.equals(password, user.password) &&
+                username.equals(user.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, password, username);
+    }
+
     /**
      * The type User builder.
      */

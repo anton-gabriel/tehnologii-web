@@ -17,8 +17,11 @@ public class CardValidator {
      * @return whether the card is valid to be played
      */
     public static boolean isCardValid(StandardCard card, GameRoom room) {
-        if (!(room.getCurrentCard() instanceof StandardCard)) {
+        if (!room.getStackedDrawCards().isEmpty()) {
             return false;
+        }
+        if (room.getCurrentCard() instanceof JokerCard) {
+            return true;
         }
         StandardCard roomCard = (StandardCard) room.getCurrentCard();
         if (roomCard.getCardNumber().equals(card.getCardNumber())) {
@@ -35,6 +38,9 @@ public class CardValidator {
      * @return whether the card is valid to be played
      */
     public static boolean isJokerValid(JokerCard card, GameRoom room) {
+        if (!room.getStackedDrawCards().isEmpty()) {
+            return true;
+        }
         if (room.getCurrentCard() instanceof JokerCard) {
             return true;
         } else if (room.getCurrentCard() instanceof StandardCard) {

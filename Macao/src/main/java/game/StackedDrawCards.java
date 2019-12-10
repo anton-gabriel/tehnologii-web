@@ -27,10 +27,13 @@ public class StackedDrawCards {
         Player target = room.getPlayers().getCurrentPlayer();
         IntStream.range(0, numberOfCards).mapToObj(card -> room.getDeck().getCard())
                 .filter(Objects::nonNull).forEach(extracted -> target.getCards().add(extracted));
+        clear();
     }
 
     /**
      * Clear the stacked cards.
+     *
+     * @return the boolean
      */
     public boolean clear() {
         this.numberOfCards = GameConstants.INITIAL_STACKED_CARDS;
@@ -41,9 +44,19 @@ public class StackedDrawCards {
      * Add cards.
      *
      * @param cards the card number
+     * @return the boolean
      */
     public boolean addCards(int cards) {
         this.numberOfCards += cards;
         return true;
+    }
+
+    /**
+     * Is empty.
+     *
+     * @return whether there are stacked cards to draw
+     */
+    public boolean isEmpty() {
+        return this.numberOfCards == GameConstants.INITIAL_STACKED_CARDS;
     }
 }
