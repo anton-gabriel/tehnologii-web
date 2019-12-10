@@ -41,7 +41,7 @@ public class GameRoom {
         this.players = new PlayerList(this.gameOwner);
         this.stackedDrawCards = new StackedDrawCards();
         this.status = GameStatus.INACTIVE;
-        this.logger.info(String.format("%s created with id = %s", GameRoom.class.getName(),this.id.toString()));
+        this.logger.info(String.format("%s created with id = %s", GameRoom.class.getName(), this.id.toString()));
     }
 
     /**
@@ -191,18 +191,38 @@ public class GameRoom {
         this.id = id;
     }
 
+    /**
+     * Gets spectators.
+     *
+     * @return the spectators
+     */
     public ArrayList<Player> getSpectators() {
         return spectators;
     }
 
+    /**
+     * Sets spectators.
+     *
+     * @param spectators the spectators
+     */
     public void setSpectators(ArrayList<Player> spectators) {
         this.spectators = spectators;
     }
 
+    /**
+     * Gets status.
+     *
+     * @return the status
+     */
     public GameStatus getStatus() {
         return status;
     }
 
+    /**
+     * Sets status.
+     *
+     * @param status the status
+     */
     public void setStatus(GameStatus status) {
         this.status = status;
     }

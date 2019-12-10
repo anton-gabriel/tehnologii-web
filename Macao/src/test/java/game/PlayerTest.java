@@ -5,6 +5,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.collections.CardsHand;
+import utils.constants.GameConstants;
 import utils.enums.PlayerStatus;
 
 /**
@@ -39,17 +40,6 @@ class PlayerTest {
     void takeCard() {
         player.takeCard(deck);
         assert !player.getCards().isEmpty();
-    }
-
-    /**
-     * Play card test method.
-     */
-    @Test
-    void playCard() {
-        int cardIndex = 0;
-        player.takeCard(deck);
-        player.playCard(cardIndex);
-        assert player.getCards().isEmpty();
     }
 
     /**
@@ -144,7 +134,82 @@ class PlayerTest {
     @Test
     void testHashCode() {
         Player firstPlayer = new Player(new User.UserBuilder("First").build());
-        Player secondPlayer = new Player(new User.UserBuilder("First").build());
+        Player secondPlayer = new Player(new User.UserBuilder("Second").build());
         assert !(firstPlayer.hashCode() == secondPlayer.hashCode());
     }
+
+    /**
+     * Test take card.
+     */
+    @Test
+    void testTakeCard() {
+        Deck deck = new Deck();
+        player.takeCard(deck);
+        assert !player.getCards().isEmpty();
+    }
+
+    /**
+     * Test play card.
+     */
+    @Test
+    void testPlayCard() {
+        Deck deck = new Deck();
+        player.takeCard(deck);
+        assert !player.playCard(player.getCards().size() - 1);
+    }
+
+    /**
+     * Test get user.
+     */
+    @Test
+    void testGetUser() {
+        assert player.getUser() != null;
+    }
+
+    /**
+     * Test set user.
+     */
+    @Test
+    void testSetUser() {
+        User user = new User.UserBuilder("Test").build();
+        player.setUser(user);
+        assert player.getUser().equals(user);
+    }
+
+    /**
+     * Test get status.
+     */
+    @Test
+    void testGetStatus() {
+        player.setStatus(PlayerStatus.ACTIVE);
+        assert player.getStatus() == PlayerStatus.ACTIVE;
+    }
+
+    /**
+     * Test set status.
+     */
+    @Test
+    void testSetStatus() {
+        player.setStatus(PlayerStatus.ACTIVE);
+        assert player.getStatus() == PlayerStatus.ACTIVE;
+    }
+
+    /**
+     * Test get number of wins.
+     */
+    @Test
+    void testGetNumberOfWins() {
+        player.setNumberOfWins(GameConstants.INITIAL_PLAYER_WINS);
+        assert player.getNumberOfWins() == GameConstants.INITIAL_PLAYER_WINS;
+    }
+
+    /**
+     * Test set number of wins.
+     */
+    @Test
+    void testSetNumberOfWins() {
+        player.setNumberOfWins(GameConstants.INITIAL_PLAYER_WINS);
+        assert player.getNumberOfWins() == GameConstants.INITIAL_PLAYER_WINS;
+    }
+
 }
