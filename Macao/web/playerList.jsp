@@ -1,5 +1,4 @@
 <%@ page import="utils.GlobalInfo" %>
-<%@ page import="model.Game" %>
 <%@ page import="java.util.UUID" %>
 <%@ page import="game.GameRoom" %>
 <%@ page import="game.Player" %><%--
