@@ -1,17 +1,23 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Home
-  Date: 12/4/2019
-  Time: 10:08 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");// HTTP 1.1
+    response.setHeader("Pragma", "no-cache");// HTTP 1.0
+    response.setHeader("Expires", "0");// Proxies
+%>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta charset="US-ASCII">
     <title>Login Page</title>
 </head>
 <body>
+
+<%
+    //allow access only if session exists
+    if(session.getAttribute("player") != null){
+        response.sendRedirect("home.jsp");
+    }
+%>
+
 <div align="center">
     <h1>Login Page</h1>
     <form action="login" method="post">
@@ -19,13 +25,13 @@
             <tr>
                 <td>UserName</td>
                 <td>
-                    <input type="text" name="username" />
+                    <input type="text" name="user"/>
                 </td>
             </tr>
             <tr>
                 <td>Password</td>
                 <td>
-                    <input type="password" name="password" />
+                    <input type="password" name="pwd" />
                 </td>
             </tr>
 

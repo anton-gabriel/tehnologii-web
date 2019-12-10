@@ -22,6 +22,17 @@ public class PlayerList extends ArrayList<Player> {
         this.currentPlayer = super.indexOf(owner);
     }
 
+    public boolean remove(Player player)
+    {
+        Player nextPlayer = peekNextPlayer();
+        if(super.remove(player))
+        {
+            this.currentPlayer = super.indexOf(nextPlayer);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Gets current player.
      *
