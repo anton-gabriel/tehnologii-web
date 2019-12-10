@@ -1,6 +1,5 @@
 package game;
 
-import javafx.scene.paint.Color;
 import utils.constants.CardsValues;
 import utils.enums.CardColor;
 import utils.enums.CardNumber;
@@ -8,7 +7,6 @@ import utils.enums.CardSymbol;
 import validators.CardValidator;
 
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 /**
  * The type Card action.
@@ -32,6 +30,10 @@ public final class CardAction {
     }
 
     private static BiFunction<Card, GameRoom, Boolean> getStandardCardAction(StandardCard card, GameRoom room) {
+        CardNumber cardNumber = card.getCardNumber();
+        if (cardNumber == null) {
+            return (gameCard, game) -> applyInvalidAction();
+        }
         switch (card.getCardNumber()) {
             case TWO:
             case THREE:
@@ -49,7 +51,11 @@ public final class CardAction {
     }
 
     private static BiFunction<Card, GameRoom, Boolean> getJokerAction(JokerCard card, GameRoom room) {
-        switch (card.getCardColor()) {
+        CardColor cardColor = card.getCardColor();
+        if (cardColor == null) {
+            return (gameCard, game) -> applyInvalidAction();
+        }
+        switch (cardColor) {
             case BLACK:
             case RED:
                 if (CardValidator.isJokerValid(card, room)) {
@@ -77,7 +83,7 @@ public final class CardAction {
         if (color.equals(CardColor.BLACK)) {
             room.getStackedDrawCards().addCards(CardsValues.BLACK_JOKER);
             return removeCard(card, room);
-        } else if (color.equals(Color.RED)) {
+        } else if (color.equals(CardColor.RED)) {
             room.getStackedDrawCards().addCards(CardsValues.RED_JOKER);
             return removeCard(card, room);
         }
