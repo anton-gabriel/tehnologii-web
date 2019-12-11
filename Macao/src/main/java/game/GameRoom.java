@@ -19,6 +19,7 @@ public class GameRoom {
     private UUID id;
     private PlayerList players;
     private ArrayList<Player> spectators;
+    private Player winner;
 
     private Deck deck;
     private Player gameOwner;
@@ -39,6 +40,7 @@ public class GameRoom {
         this.deck = new Deck();
         this.spectators = new ArrayList<Player>();
         this.players = new PlayerList(this.gameOwner);
+        this.winner = null;
         this.stackedDrawCards = new StackedDrawCards();
         this.status = GameStatus.INACTIVE;
         this.logger.info(String.format("%s created with id = %s", GameRoom.class.getName(),this.id.toString()));
@@ -207,6 +209,25 @@ public class GameRoom {
         this.status = status;
     }
 
+    public Player getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
+
+    public void calculateWinner() {
+        winner = this.players.getCurrentPlayer();
+        for(Player possibleWinner : this.players)
+        {
+            if(winner.getCards().size() > possibleWinner.getCards().size())
+            {
+                winner = possibleWinner;
+            }
+        }
+        winner.setNumberOfWins(winner.getNumberOfWins()+1);
+    }
 
     @Override
     public boolean equals(Object o) {

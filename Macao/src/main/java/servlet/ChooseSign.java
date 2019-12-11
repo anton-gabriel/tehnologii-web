@@ -1,26 +1,25 @@
 package servlet;
 
+import game.Card;
+import game.CardAction;
 import game.GameRoom;
-import model.Game;
-import model.User;
-import repository.UserRepository;
+
+import game.Player;
 import utils.GlobalInfo;
+import utils.enums.CardSymbol;
 import utils.enums.GameStatus;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.UUID;
 
-@WebServlet(name = "startGame",
-        urlPatterns = {"/startGame"})
-public class StartGame extends HttpServlet {
+@WebServlet(name = "chooseSign",
+        urlPatterns = {"/chooseSign"})
+public class ChooseSign extends HttpServlet {
 
-    public StartGame() {
+    public ChooseSign() {
         super();
     }
 
@@ -42,13 +41,27 @@ public class StartGame extends HttpServlet {
             }
             else {
                 UUID gameId = (UUID)session.getAttribute("gameId");
-                GameStatus status = GameStatus.ACTIVE;
                 GameRoom game = GlobalInfo.getGame(gameId);
+                CardSymbol cardSymbol = CardSymbol.valueOf(req.getParameter("signValue"));
                 if (game != null)
                 {
-                    if(game.startGame()) {
-                        game.setStatus(status);
-                        session.setAttribute("gameStatus", status);
+                    Player player = game.getPlayers().getCurrentPlayer();
+                    req.getSession(false).setAttribute("seven", null);
+                    Card card = player.getCards().get(player.getCards().size()-1);
+                    player.setDesiredCardSymbol(cardSymbol);
+
+                    if(CardAction.getAction(card, game).apply(card,game))
+                    {
+                        if (player.getCards().isEmpty())
+                        {
+                            game.setWinner(player);
+                            game.setStatus(GameStatus.FINISHED);
+                            player.setNumberOfWins(player.getNumberOfWins()+1);
+                        }
+                        else
+                        {
+                            game.getPlayers().getNextPlayer();
+                        }
                     }
                     resp.sendRedirect("game.jsp");
                 }

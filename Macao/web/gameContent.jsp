@@ -1,3 +1,12 @@
+<%@ page import="utils.GlobalInfo" %>
+<%@ page import="java.util.UUID" %>
+<%@ page import="game.GameRoom" %>
+<%@ page import="game.Player" %>
+<%@ page import="utils.enums.GameStatus" %>
+<%@ page import="java.util.Objects" %>
+<%@ page import="game.Card" %>
+<%@ page import="utils.enums.PlayerStatus" %>
+<%@ page import="utils.enums.CardSymbol" %><%--
 <%--
   Created by IntelliJ IDEA.
   User: crirex
@@ -11,6 +20,137 @@
     <title>Game Content</title>
 </head>
 <body>
-Game Started
+<%
+    //allow access only if session exists
+    Player player = (Player) session.getAttribute("player");
+    Boolean sevenSymbol = (Boolean)session.getAttribute("seven");
+    UUID gameId = (UUID) session.getAttribute("gameId");
+    if(player == null){
+        response.sendRedirect("login.jsp");
+    }
+    else {
+        if (gameId == null) {
+            response.sendRedirect("home.jsp");
+        }
+    }
+    GameRoom game = GlobalInfo.getGame(gameId);
+%>
+
+Game=<%=gameId %>
+
+<form action="exitGame" method="post">
+    <input type="submit" value="Exit" >
+</form>
+
+<%
+    assert game != null;
+    if(game.getStatus() == GameStatus.INACTIVE)
+    {
+%>
+
+<table border='1'>
+    <tr>
+        <td>No</td>
+        <td>Player</td>
+    </tr>
+
+    <%
+        int playerId = 0;
+        for (Player gotPlayer : game.getPlayers()) {
+            out.println("<tr><td>");
+            out.println("" + playerId);
+            out.println("</td><td>");
+            out.println(gotPlayer.getUser().getUsername());
+            out.println("</td></tr>");
+            playerId += 1;
+        }
+    %>
+</table>
+<br>
+<%
+    if (game.getPlayers().size() >= 2 && game.getGameOwner().equals(player))
+    {
+        out.println("<form action=\"startGame\" method=\"post\"><input type=\"submit\" value=\"Start Game\" ></form>");
+    }
+    else
+    {
+        out.println("<form action=\"startGame\" method=\"post\"><input type=\"submit\" value=\"Start Game\" disabled></form>");
+    }
+%>
+
+<%
+    } else if(game.getStatus() == GameStatus.ACTIVE)
+    {
+%>
+
+<%
+    Player currentPlayer = Objects.requireNonNull(GlobalInfo.getGame((UUID) session.getAttribute("gameId"))).getPlayers().getCurrentPlayer();
+%>
+
+Player <%=currentPlayer.getUser().getUsername() %>`s turn.
+<br><br><br><br><br>
+
+Curent card on top is <%=game.getCurrentCard().toString() %>
+
+<br><br><br><br><br>
+
+<%=game.getDeck().getCards().size() %> cards remaining.
+
+<br><br><br><br><br>
+
+The number of cards to draw are <%= game.getStackedDrawCards().getNumberOfCards() != 0 ? game.getStackedDrawCards().getNumberOfCards() : 1 %>
+
+<%
+    if(sevenSymbol == null)
+    {
+    assert player != null;
+    if(player.getStatus() != PlayerStatus.SPECTATING) {
+        if (game.getPlayers().getCurrentPlayer().equals(player)) {
+            out.println("<form action=\"drawCard\" method=\"post\"><input type=\"submit\" value=\"Draw\" ></form>");
+        } else {
+            out.println("<form action=\"drawCard\" method=\"post\"><input type=\"submit\" value=\"Draw\" disabled></form>");
+        }
+    }
+%>
+
+
+<br><br>
+<%
+    if(currentPlayer.equals(player)) {
+        int cardNumber = 0;
+        for (Card card : currentPlayer.getCards()) {
+            out.print("<form action=\"useCard\" method=\"post\">");
+            out.print("<input type=\"hidden\" value=\"" + cardNumber + "\" name=\"cardNumber\" >");
+            out.print("<input type=\"submit\" value=\"" + card.toString() + "\" >");
+            out.print("</form>");
+            cardNumber += 1;
+            if (cardNumber%5 == 0)
+            {
+                out.print("<br>");
+            }
+        }
+    }
+    }
+    else
+    {
+        for (CardSymbol symbol : CardSymbol.values()) {
+            out.print("<form action=\"chooseSign\" method=\"post\">");
+            out.print("<input type=\"hidden\" value=\"" + symbol + "\" name=\"signValue\" >");
+            out.print("<input type=\"submit\" value=\"" + symbol.toString() + "\" >");
+            out.print("</form>");
+        }
+    }
+%>
+
+<%
+} else if(game.getStatus() == GameStatus.FINISHED)
+{
+%>
+
+Winner is: <%=game.getWinner().getUser().getUsername() %>
+
+<%
+}
+%>
 </body>
 </html>

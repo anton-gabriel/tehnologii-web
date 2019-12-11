@@ -6,6 +6,7 @@ import model.Game;
 import model.User;
 import repository.UserRepository;
 import utils.GlobalInfo;
+import utils.enums.PlayerStatus;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -35,10 +36,15 @@ public class CreateGame extends HttpServlet {
         if (session == null) {
             resp.sendRedirect("login.jsp");
         }
+        else if (session.getAttribute("gameId") != null)
+        {
+            resp.sendRedirect("game.jsp");
+        }
         else {
             Player player = (Player) session.getAttribute("player");
             GameRoom game = new GameRoom(player);
             GlobalInfo.games.add(game);
+            player.setStatus(PlayerStatus.ATTENDING);
             session.setAttribute("gameId", game.getId());
             resp.sendRedirect("game.jsp");
         }

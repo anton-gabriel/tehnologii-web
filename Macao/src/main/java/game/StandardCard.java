@@ -76,4 +76,9 @@ public class StandardCard implements Card {
     public int hashCode() {
         return Objects.hash(cardNumber, cardSymbol);
     }
+
+    @Override
+    public String toString(){
+        return "" + cardNumber.toString() + " " + cardSymbol.toString();
+    }
 }

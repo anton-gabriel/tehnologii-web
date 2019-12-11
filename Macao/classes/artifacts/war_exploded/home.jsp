@@ -19,6 +19,7 @@
     Player player = (Player) session.getAttribute("player");
     UUID gameId = (UUID) session.getAttribute("gameId");
     String username = "";
+    Integer numberOfWins = 0;
     if(gameId != null){
         response.sendRedirect("game.jsp");
     }
@@ -30,10 +31,12 @@
         else
         {
             username = player.getUser().getUsername();
+            numberOfWins = player.getNumberOfWins();
         }
     }
 %>
 <h3>Hi <%=username %>, Login successful. Your Session ID=<%=session.getId() %></h3>
+The number of wins is: <%=numberOfWins %>
 
 <br>
 <form action="logout" method="post">

@@ -53,4 +53,9 @@ public final class JokerCard implements Card {
     public int hashCode() {
         return Objects.hash(cardColor);
     }
+
+    @Override
+    public String toString(){
+        return "JOKER " + cardColor.toString();
+    }
 }

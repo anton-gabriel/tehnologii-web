@@ -12,4 +12,8 @@ public enum PlayerStatus {
      * Attending player status.
      */
     ATTENDING,
+    /**
+     * Spectating player status.
+     */
+    SPECTATING,
 }

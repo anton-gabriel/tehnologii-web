@@ -6,6 +6,7 @@ import model.Game;
 import model.User;
 import repository.UserRepository;
 import utils.GlobalInfo;
+import utils.enums.GameStatus;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -32,13 +33,18 @@ public class ExitGame extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        //invalidate the session if exists
         HttpSession session = req.getSession(false);
         UUID gameId = (UUID) session.getAttribute("gameId");
         Player player = (Player) session.getAttribute("player");
         GameRoom game = GlobalInfo.getGame(gameId);
         if(game != null) {
             game.getPlayers().remove(player);
+            if (game.getPlayers().size() == 1 && game.getStatus() != GameStatus.FINISHED)
+            {
+                game.setWinner(game.getPlayers().get(0));
+                game.setStatus(GameStatus.FINISHED);
+                game.getWinner().setNumberOfWins(player.getNumberOfWins()+1);
+            }
             if (game.getPlayers().size() <= 0 && game.getSpectators().size() <= 0) {
                 GlobalInfo.games.remove(game);
             }

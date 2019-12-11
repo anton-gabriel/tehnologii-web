@@ -1,26 +1,23 @@
 package servlet;
 
+import game.Card;
+import game.CardAction;
 import game.GameRoom;
-import model.Game;
-import model.User;
-import repository.UserRepository;
-import utils.GlobalInfo;
-import utils.enums.GameStatus;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
+import game.Player;
+import utils.GlobalInfo;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.UUID;
 
-@WebServlet(name = "startGame",
-        urlPatterns = {"/startGame"})
-public class StartGame extends HttpServlet {
+@WebServlet(name = "drawCard",
+        urlPatterns = {"/drawCard"})
+public class DrawCard extends HttpServlet {
 
-    public StartGame() {
+    public DrawCard() {
         super();
     }
 
@@ -42,14 +39,11 @@ public class StartGame extends HttpServlet {
             }
             else {
                 UUID gameId = (UUID)session.getAttribute("gameId");
-                GameStatus status = GameStatus.ACTIVE;
                 GameRoom game = GlobalInfo.getGame(gameId);
                 if (game != null)
                 {
-                    if(game.startGame()) {
-                        game.setStatus(status);
-                        session.setAttribute("gameStatus", status);
-                    }
+                    game.getStackedDrawCards().draw(game);
+                    game.getPlayers().getNextPlayer();
                     resp.sendRedirect("game.jsp");
                 }
                 else

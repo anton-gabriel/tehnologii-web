@@ -7,6 +7,7 @@ import model.User;
 import repository.UserRepository;
 import utils.GlobalInfo;
 import utils.enums.GameStatus;
+import utils.enums.PlayerStatus;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -37,6 +38,10 @@ public class JoinGame extends HttpServlet {
         if (session == null) {
             resp.sendRedirect("login.jsp");
         }
+        else if (session.getAttribute("gameId") != null)
+        {
+            resp.sendRedirect("game.jsp");
+        }
         else {
             UUID gameId = UUID.fromString(req.getParameter("gameId"));
             Player player = (Player) session.getAttribute("player");
@@ -45,10 +50,12 @@ public class JoinGame extends HttpServlet {
 
             if(game.getStatus() == GameStatus.INACTIVE) {
                 game.addPlayer(player);
+                player.setStatus(PlayerStatus.ATTENDING);
                 session.setAttribute("gameId", gameId);
                 resp.sendRedirect("game.jsp");
             } else if(game.getStatus() == GameStatus.ACTIVE) {
                 game.getSpectators().add(player);
+                player.setStatus(PlayerStatus.SPECTATING);
                 session.setAttribute("gameId", gameId);
                 resp.sendRedirect("game.jsp");
             } else

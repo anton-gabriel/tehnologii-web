@@ -85,8 +85,9 @@ public final class CardAction {
 
     private static Boolean applyChangeCardAction(StandardCard card, GameRoom room) {
         CardSymbol symbol = room.getPlayers().getCurrentPlayer().getDesiredCardSymbol();
+        Boolean isRemoved = removeCard(card, room);
         room.setCurrentCard(new StandardCard(CardNumber.SEVEN, symbol));
-        return removeCard(card, room);
+        return isRemoved;
     }
 
     private static Boolean applyInvalidAction() {
