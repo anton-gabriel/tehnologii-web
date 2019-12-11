@@ -30,42 +30,32 @@ public class UseCard extends HttpServlet {
         HttpSession session = req.getSession(false);
         if (session == null) {
             resp.sendRedirect("login.jsp");
-        }
-        else {
-            if (session.getAttribute("gameId") == null)
-            {
+        } else {
+            if (session.getAttribute("gameId") == null) {
                 resp.sendRedirect("home.jsp");
-            }
-            else {
-                UUID gameId = (UUID)session.getAttribute("gameId");
+            } else {
+                UUID gameId = (UUID) session.getAttribute("gameId");
                 GameRoom game = GlobalInfo.getGame(gameId);
                 int cardLocation = Integer.parseInt(req.getParameter("cardNumber"));
-                if (game != null)
-                {
+                if (game != null) {
                     Player player = game.getPlayers().getCurrentPlayer();
                     Card card = player.getCards().get(cardLocation);
-                    if (card instanceof StandardCard && ((StandardCard)card).getCardNumber() == CardNumber.SEVEN)
-                    {
+                    if (card instanceof StandardCard && ((StandardCard) card).getCardNumber() == CardNumber.SEVEN) {
                         player.getCards().remove(cardLocation);
                         player.getCards().add(card);
                         req.getSession(false).setAttribute("seven", true);
-                    }else if(CardAction.getAction(card, game).apply(card,game))
-                    {
-                        if (player.getCards().isEmpty())
-                        {
+                    } else if (CardAction.getAction(card, game).apply(card, game)) {
+                        if (player.getCards().isEmpty()) {
                             game.setWinner(player);
                             game.setStatus(GameStatus.FINISHED);
-                            player.setNumberOfWins(player.getNumberOfWins()+1);
-                        }
-                        else
-                        {
+                            player.setNumberOfWins(player.getNumberOfWins() + 1);
+                        } else {
                             game.getPlayers().getNextPlayer();
+                            session.setAttribute("lobby", "yes");
                         }
                     }
                     resp.sendRedirect("game.jsp");
-                }
-                else
-                {
+                } else {
                     resp.sendRedirect("home.jsp");
                 }
             }

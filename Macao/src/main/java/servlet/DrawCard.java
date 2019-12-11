@@ -31,23 +31,18 @@ public class DrawCard extends HttpServlet {
         HttpSession session = req.getSession(false);
         if (session == null) {
             resp.sendRedirect("login.jsp");
-        }
-        else {
-            if (session.getAttribute("gameId") == null)
-            {
+        } else {
+            if (session.getAttribute("gameId") == null) {
                 resp.sendRedirect("home.jsp");
-            }
-            else {
-                UUID gameId = (UUID)session.getAttribute("gameId");
+            } else {
+                UUID gameId = (UUID) session.getAttribute("gameId");
                 GameRoom game = GlobalInfo.getGame(gameId);
-                if (game != null)
-                {
+                if (game != null) {
                     game.getStackedDrawCards().draw(game);
                     game.getPlayers().getNextPlayer();
+                    session.setAttribute("lobby", "yes");
                     resp.sendRedirect("game.jsp");
-                }
-                else
-                {
+                } else {
                     resp.sendRedirect("home.jsp");
                 }
             }

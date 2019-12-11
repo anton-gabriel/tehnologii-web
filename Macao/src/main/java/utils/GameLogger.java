@@ -51,7 +51,7 @@ public class GameLogger {
      * @param level   the level
      * @param message the message
      */
-    public void log(Level level , String message){
-        logger.log(level , message);
+    public void log(Level level, String message) {
+        logger.log(level, message);
     }
 }

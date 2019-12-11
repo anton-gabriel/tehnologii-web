@@ -78,7 +78,7 @@ public class StandardCard implements Card {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "" + cardNumber.toString() + " " + cardSymbol.toString();
     }
 }

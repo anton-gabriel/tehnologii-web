@@ -239,14 +239,12 @@ public class GameRoom {
 
     public void calculateWinner() {
         winner = this.players.getCurrentPlayer();
-        for(Player possibleWinner : this.players)
-        {
-            if(winner.getCards().size() > possibleWinner.getCards().size())
-            {
+        for (Player possibleWinner : this.players) {
+            if (winner.getCards().size() > possibleWinner.getCards().size()) {
                 winner = possibleWinner;
             }
         }
-        winner.setNumberOfWins(winner.getNumberOfWins()+1);
+        winner.setNumberOfWins(winner.getNumberOfWins() + 1);
     }
 
     @Override

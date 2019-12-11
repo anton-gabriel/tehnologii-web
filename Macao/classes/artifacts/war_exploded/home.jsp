@@ -20,31 +20,29 @@
     UUID gameId = (UUID) session.getAttribute("gameId");
     String username = "";
     Integer numberOfWins = 0;
-    if(gameId != null){
+    if (gameId != null) {
         response.sendRedirect("game.jsp");
-    }
-    else {
+    } else {
 
         if (player == null) {
             response.sendRedirect("login.jsp");
-        }
-        else
-        {
+        } else {
             username = player.getUser().getUsername();
             numberOfWins = player.getNumberOfWins();
         }
     }
 %>
-<h3>Hi <%=username %>, Login successful. Your Session ID=<%=session.getId() %></h3>
+<h3>Hi <%=username %>, Login successful. Your Session ID=<%=session.getId() %>
+</h3>
 The number of wins is: <%=numberOfWins %>
 
 <br>
 <form action="logout" method="post">
-    <input type="submit" value="Logout" >
+    <input type="submit" value="Logout">
 </form>
 
 <form action="createGame" method="post">
-    <input type="submit" value="Create new game" >
+    <input type="submit" value="Create new game">
 </form>
 
 <div id="listGame">
@@ -53,7 +51,7 @@ The number of wins is: <%=numberOfWins %>
 <script>
     setInterval(function refreshList() {
         var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
+        xhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
                 document.getElementById("listGame").innerHTML =
                     this.responseText;
@@ -61,7 +59,7 @@ The number of wins is: <%=numberOfWins %>
         };
         xhttp.open("GET", "gameList.jsp", true);
         xhttp.send();
-    },1000);
+    }, 1000);
 </script>
 </body>
 </html>
