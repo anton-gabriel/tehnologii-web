@@ -20,7 +20,7 @@ public class GameLogger {
 
     private GameLogger() throws IOException {
         logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-        directory = new File("D:\\Repos\\Logs.log" );
+        directory = new File(String.format("%s/application.log", System.getProperty("user.dir")));
         file = new FileHandler(directory.getAbsolutePath());
         formatter = new SimpleFormatter();
         file.setFormatter(formatter);
@@ -33,9 +33,14 @@ public class GameLogger {
      * @return the instance
      * @throws IOException the io exception
      */
-    static public GameLogger getInstance() throws IOException {
+    static public GameLogger getInstance()  {
+
         if(singleInstance == null){
-            singleInstance = new GameLogger();
+            try {
+                singleInstance = new GameLogger();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return singleInstance;
     }

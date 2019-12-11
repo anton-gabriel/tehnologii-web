@@ -11,16 +11,25 @@ import utils.enums.GameStatus;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * The type Game room test.
+ */
 class GameRoomTest {
 
     private Player player = new Player(new User.UserBuilder("Gabi").build());
 
+    /**
+     * Start game test method.
+     */
     @Test
     void startGame() {
         GameRoom gameRoom = new GameRoom(player);
         assert !gameRoom.startGame();
     }
 
+    /**
+     * Add player test method.
+     */
     @Test
     void addPlayer() {
         GameRoom gameRoom = new GameRoom(player);
@@ -28,12 +37,18 @@ class GameRoomTest {
         assert gameRoom.getPlayers().size() == GameConstants.MINIMUM_PLAYERS;
     }
 
+    /**
+     * Gets players test method.
+     */
     @Test
     void getPlayers() {
         GameRoom gameRoom = new GameRoom(player);
         assert gameRoom.getPlayers() != null;
     }
 
+    /**
+     * Sets players test method.
+     */
     @Test
     void setPlayers() {
         GameRoom gameRoom = new GameRoom(player);
@@ -41,12 +56,18 @@ class GameRoomTest {
         assert gameRoom.getPlayers() != null;
     }
 
+    /**
+     * Gets deck test method.
+     */
     @Test
     void getDeck() {
         GameRoom gameRoom = new GameRoom(player);
         assert gameRoom.getDeck() instanceof Deck;
     }
 
+    /**
+     * Sets deck test method.
+     */
     @Test
     void setDeck() {
         GameRoom gameRoom = new GameRoom(player);
@@ -55,12 +76,18 @@ class GameRoomTest {
         assert gameRoom.getDeck().equals(deck);
     }
 
+    /**
+     * Gets game owner test method.
+     */
     @Test
     void getGameOwner() {
         GameRoom gameRoom = new GameRoom(player);
         assert gameRoom.getGameOwner().equals(player);
     }
 
+    /**
+     * Sets game owner test method.
+     */
     @Test
     void setGameOwner() {
         GameRoom gameRoom = new GameRoom(player);
@@ -69,6 +96,9 @@ class GameRoomTest {
         assert gameRoom.getGameOwner().equals(player);
     }
 
+    /**
+     * Gets current card test method.
+     */
     @Test
     void getCurrentCard() {
         GameRoom gameRoom = new GameRoom(player);
@@ -77,6 +107,9 @@ class GameRoomTest {
         assert gameRoom.getCurrentCard().equals(card);
     }
 
+    /**
+     * Sets current card test method.
+     */
     @Test
     void setCurrentCard() {
         GameRoom gameRoom = new GameRoom(player);
@@ -85,6 +118,9 @@ class GameRoomTest {
         assert gameRoom.getCurrentCard().equals(card);
     }
 
+    /**
+     * Gets stacked draw cards test method.
+     */
     @Test
     void getStackedDrawCards() {
         GameRoom gameRoom = new GameRoom(player);
@@ -92,6 +128,9 @@ class GameRoomTest {
         assert gameRoom.getStackedDrawCards() != null;
     }
 
+    /**
+     * Sets stacked draw cards test method.
+     */
     @Test
     void setStackedDrawCards() {
         GameRoom gameRoom = new GameRoom(player);
@@ -100,12 +139,18 @@ class GameRoomTest {
         assert gameRoom.getStackedDrawCards().equals(stackedDrawCards);
     }
 
+    /**
+     * Gets id test method.
+     */
     @Test
     void getId() {
         GameRoom gameRoom = new GameRoom(player);
         assert gameRoom.getId() != null;
     }
 
+    /**
+     * Sets id test method.
+     */
     @Test
     void setId() {
         GameRoom gameRoom = new GameRoom(player);
@@ -114,6 +159,9 @@ class GameRoomTest {
         assert gameRoom.getId().equals(uuid);
     }
 
+    /**
+     * Gets spectators test method.
+     */
     @Test
     void getSpectators() {
         GameRoom gameRoom = new GameRoom(player);
@@ -121,6 +169,9 @@ class GameRoomTest {
         assert gameRoom.getSpectators() != null;
     }
 
+    /**
+     * Sets spectators test method.
+     */
     @Test
     void setSpectators() {
         GameRoom gameRoom = new GameRoom(player);
@@ -130,12 +181,18 @@ class GameRoomTest {
         assert gameRoom.getSpectators().equals(spectators);
     }
 
+    /**
+     * Gets status test method.
+     */
     @Test
     void getStatus() {
         GameRoom gameRoom = new GameRoom(player);
         assert gameRoom.getStatus() == GameStatus.INACTIVE;
     }
 
+    /**
+     * Sets status test method.
+     */
     @Test
     void setStatus() {
         GameRoom gameRoom = new GameRoom(player);
@@ -143,6 +200,9 @@ class GameRoomTest {
         assert gameRoom.getStatus() == GameStatus.ACTIVE;
     }
 
+    /**
+     * Test equals test method.
+     */
     @Test
     void testEquals() {
         GameRoom firstRoom = new GameRoom(player);
@@ -150,6 +210,9 @@ class GameRoomTest {
         assert !firstRoom.equals(secondRoom);
     }
 
+    /**
+     * Test hash code test method.
+     */
     @Test
     void testHashCode() {
         GameRoom firstRoom = new GameRoom(player);

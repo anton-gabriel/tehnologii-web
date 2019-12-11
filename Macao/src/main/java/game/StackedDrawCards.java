@@ -27,18 +27,18 @@ public class StackedDrawCards {
     public void draw(GameRoom room) {
         Player target = room.getPlayers().getCurrentPlayer();
 
-        if (numberOfCards <= 1){numberOfCards = 1;}
+        if (numberOfCards <= 1) {
+            numberOfCards = 1;
+        }
 
         IntStream.range(0, numberOfCards).mapToObj(card -> room.getDeck().getCard())
                 .filter(Objects::nonNull).forEach(extracted -> target.getCards().add(extracted));
         clear();
 
-        if(room.getDeck().getCards().isEmpty())
-        {
+        if (room.getDeck().getCards().isEmpty()) {
             room.calculateWinner();
             room.setStatus(GameStatus.FINISHED);
         }
-
     }
 
     /**
