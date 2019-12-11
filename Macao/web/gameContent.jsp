@@ -1,14 +1,13 @@
 <%@ page import="utils.GlobalInfo" %>
 <%@ page import="java.util.UUID" %>
-<%@ page import="game.GameRoom" %>
-<%@ page import="game.Player" %>
 <%@ page import="utils.enums.GameStatus" %>
 <%@ page import="java.util.Objects" %>
-<%@ page import="game.Card" %>
 <%@ page import="utils.enums.PlayerStatus" %>
 <%@ page import="utils.enums.CardSymbol" %>
 <%@ page import="servlet.ExitGame" %>
-<%@ page import="utils.constants.ApplicationConstants" %><%--
+<%@ page import="utils.constants.ApplicationConstants" %>
+<%@ page import="game.*" %>
+<%@ page import="validators.CardValidator" %><%--
 <%--
   Created by IntelliJ IDEA.
   User: crirex
@@ -137,9 +136,20 @@ are <%= game.getStackedDrawCards().getNumberOfCards() != 0 ? game.getStackedDraw
 
             int cardNumber = ApplicationConstants.INITIAL_INDEX;
             for (Card card : currentPlayer.getCards()) {
+                String isDisabled = "";
+                if (card instanceof StandardCard) {
+                    if (!CardValidator.isCardValid((StandardCard) card, game)) {
+                        isDisabled = "disabled";
+                    }
+                } else if (card instanceof JokerCard) {
+                    if (!CardValidator.isJokerValid((JokerCard) card, game)) {
+                        isDisabled = "disabled";
+                    }
+                }
+
                 out.print("<form action=\"useCard\" method=\"post\">");
                 out.print("<input type=\"hidden\" value=\"" + cardNumber + "\" name=\"cardNumber\" >");
-                out.print("<input type=\"submit\" value=\"" + card.toString() + "\" >");
+                out.print("<input type=\"submit\" value=\"" + card.toString() + "\" " + isDisabled + ">");
                 out.print("</form>");
                 cardNumber += ApplicationConstants.ITERATION_VALUE;
             }
