@@ -30,29 +30,28 @@ public class JoinGame extends HttpServlet {
         HttpSession session = req.getSession(false);
         if (session == null) {
             resp.sendRedirect("login.jsp");
-        }
-        else if (session.getAttribute("gameId") != null)
-        {
+        } else if (session.getAttribute("gameId") != null) {
             resp.sendRedirect("game.jsp");
-        }
-        else {
+        } else {
             UUID gameId = UUID.fromString(req.getParameter("gameId"));
             Player player = (Player) session.getAttribute("player");
 
             GameRoom game = GlobalInfo.getGame(gameId);
 
-            if(game.getStatus() == GameStatus.INACTIVE) {
-                game.addPlayer(player);
+            if (game.getStatus() == GameStatus.INACTIVE) {
+
+                if (!game.getSpectators().contains(player)) {
+                    game.addPlayer(player);
+                }
                 player.setStatus(PlayerStatus.ATTENDING);
                 session.setAttribute("gameId", gameId);
                 resp.sendRedirect("game.jsp");
-            } else if(game.getStatus() == GameStatus.ACTIVE) {
+            } else if (game.getStatus() == GameStatus.ACTIVE) {
                 game.getSpectators().add(player);
                 player.setStatus(PlayerStatus.SPECTATING);
                 session.setAttribute("gameId", gameId);
                 resp.sendRedirect("game.jsp");
-            } else
-            {
+            } else {
                 //Nothing
             }
 

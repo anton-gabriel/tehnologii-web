@@ -28,26 +28,20 @@ public class StartGame extends HttpServlet {
         HttpSession session = req.getSession(false);
         if (session == null) {
             resp.sendRedirect("login.jsp");
-        }
-        else {
-            if (session.getAttribute("gameId") == null)
-            {
+        } else {
+            if (session.getAttribute("gameId") == null) {
                 resp.sendRedirect("home.jsp");
-            }
-            else {
-                UUID gameId = (UUID)session.getAttribute("gameId");
+            } else {
+                UUID gameId = (UUID) session.getAttribute("gameId");
                 GameStatus status = GameStatus.ACTIVE;
                 GameRoom game = GlobalInfo.getGame(gameId);
-                if (game != null)
-                {
-                    if(game.startGame()) {
+                if (game != null) {
+                    if (game.startGame()) {
                         game.setStatus(status);
                         session.setAttribute("gameStatus", status);
                     }
                     resp.sendRedirect("game.jsp");
-                }
-                else
-                {
+                } else {
                     resp.sendRedirect("home.jsp");
                 }
             }

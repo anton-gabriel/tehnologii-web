@@ -55,7 +55,7 @@ public final class JokerCard implements Card {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "JOKER " + cardColor.toString();
     }
 }

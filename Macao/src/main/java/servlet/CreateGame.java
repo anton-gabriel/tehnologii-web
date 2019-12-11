@@ -28,12 +28,9 @@ public class CreateGame extends HttpServlet {
         HttpSession session = req.getSession(false);
         if (session == null) {
             resp.sendRedirect("login.jsp");
-        }
-        else if (session.getAttribute("gameId") != null)
-        {
+        } else if (session.getAttribute("gameId") != null) {
             resp.sendRedirect("game.jsp");
-        }
-        else {
+        } else {
             Player player = (Player) session.getAttribute("player");
             GameRoom game = new GameRoom(player);
             GlobalInfo.games.add(game);

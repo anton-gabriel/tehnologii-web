@@ -33,40 +33,30 @@ public class ChooseSign extends HttpServlet {
         HttpSession session = req.getSession(false);
         if (session == null) {
             resp.sendRedirect("login.jsp");
-        }
-        else {
-            if (session.getAttribute("gameId") == null)
-            {
+        } else {
+            if (session.getAttribute("gameId") == null) {
                 resp.sendRedirect("home.jsp");
-            }
-            else {
-                UUID gameId = (UUID)session.getAttribute("gameId");
+            } else {
+                UUID gameId = (UUID) session.getAttribute("gameId");
                 GameRoom game = GlobalInfo.getGame(gameId);
                 CardSymbol cardSymbol = CardSymbol.valueOf(req.getParameter("signValue"));
-                if (game != null)
-                {
+                if (game != null) {
                     Player player = game.getPlayers().getCurrentPlayer();
                     req.getSession(false).setAttribute("seven", null);
-                    Card card = player.getCards().get(player.getCards().size()-1);
+                    Card card = player.getCards().get(player.getCards().size() - 1);
                     player.setDesiredCardSymbol(cardSymbol);
 
-                    if(CardAction.getAction(card, game).apply(card,game))
-                    {
-                        if (player.getCards().isEmpty())
-                        {
+                    if (CardAction.getAction(card, game).apply(card, game)) {
+                        if (player.getCards().isEmpty()) {
                             game.setWinner(player);
                             game.setStatus(GameStatus.FINISHED);
-                            player.setNumberOfWins(player.getNumberOfWins()+1);
-                        }
-                        else
-                        {
+                            player.setNumberOfWins(player.getNumberOfWins() + 1);
+                        } else {
                             game.getPlayers().getNextPlayer();
                         }
                     }
                     resp.sendRedirect("game.jsp");
-                }
-                else
-                {
+                } else {
                     resp.sendRedirect("home.jsp");
                 }
             }
