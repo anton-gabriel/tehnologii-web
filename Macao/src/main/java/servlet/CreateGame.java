@@ -36,6 +36,7 @@ public class CreateGame extends HttpServlet {
             GlobalInfo.games.add(game);
             player.setStatus(PlayerStatus.ATTENDING);
             session.setAttribute("gameId", game.getId());
+            session.setAttribute("lobby", "yes");
             resp.sendRedirect("game.jsp");
         }
     }

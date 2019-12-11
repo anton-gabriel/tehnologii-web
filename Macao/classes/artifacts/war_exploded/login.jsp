@@ -13,7 +13,7 @@
 
 <%
     //allow access only if session exists
-    if(session.getAttribute("player") != null){
+    if (session.getAttribute("player") != null) {
         response.sendRedirect("home.jsp");
     }
 %>
@@ -31,12 +31,12 @@
             <tr>
                 <td>Password</td>
                 <td>
-                    <input type="password" name="pwd" />
+                    <input type="password" name="pwd"/>
                 </td>
             </tr>
 
         </table>
-        <input type="submit" value="Login" />
+        <input type="submit" value="Login"/>
     </form>
 </div>
 </body>

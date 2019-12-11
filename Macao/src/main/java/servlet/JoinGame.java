@@ -45,6 +45,7 @@ public class JoinGame extends HttpServlet {
                 }
                 player.setStatus(PlayerStatus.ATTENDING);
                 session.setAttribute("gameId", gameId);
+                session.setAttribute("lobby", "yes");
                 resp.sendRedirect("game.jsp");
             } else if (game.getStatus() == GameStatus.ACTIVE) {
                 game.getSpectators().add(player);

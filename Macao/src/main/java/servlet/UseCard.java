@@ -51,6 +51,7 @@ public class UseCard extends HttpServlet {
                             player.setNumberOfWins(player.getNumberOfWins() + 1);
                         } else {
                             game.getPlayers().getNextPlayer();
+                            session.setAttribute("lobby", "yes");
                         }
                     }
                     resp.sendRedirect("game.jsp");

@@ -18,10 +18,9 @@
     //allow access only if session exists
     Player player = (Player) session.getAttribute("player");
     UUID gameId = (UUID) session.getAttribute("gameId");
-    if(player == null){
+    if (player == null) {
         response.sendRedirect("login.jsp");
-    }
-    else {
+    } else {
         if (gameId == null) {
             response.sendRedirect("home.jsp");
         }
@@ -34,7 +33,7 @@
 <script>
     setInterval(function refreshPlayerList() {
         var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
+        xhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
                 document.getElementById("gameContent").innerHTML =
                     this.responseText;

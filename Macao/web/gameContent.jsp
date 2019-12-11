@@ -6,7 +6,9 @@
 <%@ page import="java.util.Objects" %>
 <%@ page import="game.Card" %>
 <%@ page import="utils.enums.PlayerStatus" %>
-<%@ page import="utils.enums.CardSymbol" %><%--
+<%@ page import="utils.enums.CardSymbol" %>
+<%@ page import="servlet.ExitGame" %>
+<%@ page import="utils.constants.ApplicationConstants" %><%--
 <%--
   Created by IntelliJ IDEA.
   User: crirex
@@ -53,14 +55,14 @@ Game=<%=gameId %>
     </tr>
 
     <%
-        int playerId = 0;
+        int playerId = ApplicationConstants.INITIAL_INDEX;
         for (Player gotPlayer : game.getPlayers()) {
             out.println("<tr><td>");
             out.println("" + playerId);
             out.println("</td><td>");
             out.println(gotPlayer.getUser().getUsername());
             out.println("</td></tr>");
-            playerId += 1;
+            playerId += ApplicationConstants.ITERATION_VALUE;
         }
     %>
 </table>
@@ -111,16 +113,35 @@ are <%= game.getStackedDrawCards().getNumberOfCards() != 0 ? game.getStackedDraw
 <br><br>
 <%
         if (currentPlayer.equals(player)) {
-            int cardNumber = 0;
+
+            if (session.getAttribute("lobby") != null) {
+                session.setAttribute("lobby", null);
+                Cookie putCookie = new Cookie("timeout", "yes");
+                putCookie.setMaxAge(ApplicationConstants.PLAYER_TURN_TIMEOUT);
+                response.addCookie(putCookie);
+            } else {
+                boolean isCookieFound = false;
+                for (Cookie currentCookie : request.getCookies()) {
+                    if (currentCookie.getName().equals("timeout")) {
+                        isCookieFound = true;
+                    }
+                }
+
+                if (!isCookieFound) {
+                    session.setAttribute("gameId", null);
+                    game.getPlayers().remove(player);
+                    ExitGame.verifyFinishedGame(game, player);
+                }
+
+            }
+
+            int cardNumber = ApplicationConstants.INITIAL_INDEX;
             for (Card card : currentPlayer.getCards()) {
                 out.print("<form action=\"useCard\" method=\"post\">");
                 out.print("<input type=\"hidden\" value=\"" + cardNumber + "\" name=\"cardNumber\" >");
                 out.print("<input type=\"submit\" value=\"" + card.toString() + "\" >");
                 out.print("</form>");
-                cardNumber += 1;
-                if (cardNumber % 5 == 0) {
-                    out.print("<br>");
-                }
+                cardNumber += ApplicationConstants.ITERATION_VALUE;
             }
         }
     } else {

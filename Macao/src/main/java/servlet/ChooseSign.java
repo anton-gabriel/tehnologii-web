@@ -52,6 +52,7 @@ public class ChooseSign extends HttpServlet {
                             game.setStatus(GameStatus.FINISHED);
                             player.setNumberOfWins(player.getNumberOfWins() + 1);
                         } else {
+                            session.setAttribute("lobby", "yes");
                             game.getPlayers().getNextPlayer();
                         }
                     }

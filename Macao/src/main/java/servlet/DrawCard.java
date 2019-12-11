@@ -40,6 +40,7 @@ public class DrawCard extends HttpServlet {
                 if (game != null) {
                     game.getStackedDrawCards().draw(game);
                     game.getPlayers().getNextPlayer();
+                    session.setAttribute("lobby", "yes");
                     resp.sendRedirect("game.jsp");
                 } else {
                     resp.sendRedirect("home.jsp");
