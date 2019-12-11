@@ -2,29 +2,41 @@ package servlet;
 
 import game.GameRoom;
 import game.Player;
+import utils.GameLogger;
 import utils.GlobalInfo;
 import utils.enums.GameStatus;
 import utils.enums.PlayerStatus;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.UUID;
+import java.util.logging.Level;
 
+/**
+ * The type Exit game.
+ */
 @WebServlet(name = "exitGame",
         urlPatterns = {"/exitGame"})
 public class ExitGame extends HttpServlet {
 
+    /**
+     * Instantiates a new Exit game.
+     */
     public ExitGame() {
         super();
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
-    }
-
+    /**
+     * Verify finished game.
+     *
+     * @param game   the game
+     * @param player the player
+     */
     static public void verifyFinishedGame(GameRoom game, Player player) {
         if (game.getPlayers().size() == 1 && game.getStatus() != GameStatus.FINISHED) {
             game.setWinner(game.getPlayers().get(0));
@@ -37,7 +49,16 @@ public class ExitGame extends HttpServlet {
     }
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doGet(req, resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String methodName = new Throwable().getStackTrace()[0].getMethodName();
+        GameLogger.getInstance().log(Level.INFO,
+                String.format("%s servlet, %s method call", ChooseSign.class.getName(), methodName));
+
         resp.setContentType("text/html");
         HttpSession session = req.getSession(false);
         UUID gameId = (UUID) session.getAttribute("gameId");

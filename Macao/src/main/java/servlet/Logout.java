@@ -1,20 +1,26 @@
 package servlet;
 
-import model.User;
-import repository.UserRepository;
+import utils.GameLogger;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.util.logging.Level;
 
+/**
+ * The type Logout.
+ */
 @WebServlet(name = "logout",
         urlPatterns = {"/logout"})
 public class Logout extends HttpServlet {
 
+    /**
+     * Instantiates a new Logout.
+     */
     public Logout() {
         super();
     }
@@ -26,6 +32,10 @@ public class Logout extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String methodName = new Throwable().getStackTrace()[0].getMethodName();
+        GameLogger.getInstance().log(Level.INFO,
+                String.format("%s servlet, %s method call", ChooseSign.class.getName(), methodName));
+
         resp.setContentType("text/html");
         HttpSession session = req.getSession(false);
         if (session != null) {

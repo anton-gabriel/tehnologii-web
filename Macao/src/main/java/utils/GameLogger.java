@@ -11,12 +11,11 @@ import java.util.logging.SimpleFormatter;
  * The type My logger.
  */
 public class GameLogger {
+    static private GameLogger singleInstance = null;
     private Logger logger;
     private FileHandler file;
     private SimpleFormatter formatter;
     private File directory;
-
-    static private GameLogger singleInstance = null;
 
     private GameLogger() throws IOException {
         logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -31,11 +30,10 @@ public class GameLogger {
      * Gets instance.
      *
      * @return the instance
-     * @throws IOException the io exception
      */
-    static public GameLogger getInstance()  {
+    static public GameLogger getInstance() {
 
-        if(singleInstance == null){
+        if (singleInstance == null) {
             try {
                 singleInstance = new GameLogger();
             } catch (IOException e) {

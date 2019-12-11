@@ -1,5 +1,6 @@
 package game;
 
+import utils.GameLogger;
 import utils.collections.PlayerList;
 import utils.constants.GameConstants;
 import utils.enums.GameStatus;
@@ -7,7 +8,7 @@ import utils.enums.GameStatus;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.logging.Logger;
+import java.util.logging.Level;
 import java.util.stream.IntStream;
 
 
@@ -27,8 +28,6 @@ public class GameRoom {
     private StackedDrawCards stackedDrawCards;
     private GameStatus status;
 
-    private Logger logger = Logger.getLogger(GameRoom.class.getName());
-
     /**
      * Instantiates a new Game room.
      *
@@ -43,7 +42,7 @@ public class GameRoom {
         this.winner = null;
         this.stackedDrawCards = new StackedDrawCards();
         this.status = GameStatus.INACTIVE;
-        this.logger.info(String.format("%s created with id = %s", GameRoom.class.getName(), this.id.toString()));
+        GameLogger.getInstance().log(Level.INFO, String.format("%s created with id = %s", GameRoom.class.getName(), this.id.toString()));
     }
 
     /**
@@ -229,14 +228,27 @@ public class GameRoom {
         this.status = status;
     }
 
+    /**
+     * Gets winner.
+     *
+     * @return the winner
+     */
     public Player getWinner() {
         return winner;
     }
 
+    /**
+     * Sets winner.
+     *
+     * @param winner the winner
+     */
     public void setWinner(Player winner) {
         this.winner = winner;
     }
 
+    /**
+     * Calculate winner.
+     */
     public void calculateWinner() {
         winner = this.players.getCurrentPlayer();
         for (Player possibleWinner : this.players) {

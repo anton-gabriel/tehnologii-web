@@ -3,16 +3,20 @@ package servlet;
 import game.Player;
 import model.User;
 import repository.UserRepository;
+import utils.GameLogger;
 import utils.constants.ApplicationConstants;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.logging.Level;
 
 /**
  * The type Login.
@@ -36,6 +40,10 @@ public class Login extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String methodName = new Throwable().getStackTrace()[0].getMethodName();
+        GameLogger.getInstance().log(Level.INFO,
+                String.format("%s servlet, %s method call", ChooseSign.class.getName(), methodName));
+
         // get request parameters for userID and password
         String username = req.getParameter("user");
         String pwd = req.getParameter("pwd");

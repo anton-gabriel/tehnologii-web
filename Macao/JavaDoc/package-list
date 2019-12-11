@@ -1,0 +1,11 @@
+database
+game
+model
+repository
+repository.specifications
+servlet
+utils
+utils.collections
+utils.constants
+utils.enums
+validators
