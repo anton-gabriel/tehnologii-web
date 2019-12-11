@@ -1,6 +1,5 @@
 <%@ page import="utils.GlobalInfo" %>
 <%@ page import="game.GameRoom" %>
-<%@ page import="model.Game" %>
 <%@ page import="utils.constants.GameConstants" %><%--
   Created by IntelliJ IDEA.
   User: crirex

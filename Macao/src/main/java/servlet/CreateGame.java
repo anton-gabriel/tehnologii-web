@@ -2,20 +2,13 @@ package servlet;
 
 import game.GameRoom;
 import game.Player;
-import model.Game;
-import model.User;
-import repository.UserRepository;
 import utils.GlobalInfo;
 import utils.enums.PlayerStatus;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
 
 @WebServlet(name = "createGame",
         urlPatterns = {"/createGame"})
