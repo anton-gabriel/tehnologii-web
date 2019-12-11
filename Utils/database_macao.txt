@@ -2,7 +2,7 @@ create database macao;
 
 create table user_account (
  id SERIAL primary key not null,
- username char(32) not null,
+ username char(32) not null UNIQUE,
  password char(32) not null);
  
  \c - connect to db

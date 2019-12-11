@@ -39,7 +39,6 @@ public class StackedDrawCards {
             room.calculateWinner();
             room.setStatus(GameStatus.FINISHED);
         }
-
     }
 
     /**
