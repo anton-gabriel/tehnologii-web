@@ -149,7 +149,7 @@ are <%= game.getStackedDrawCards().getNumberOfCards() != 0 ? game.getStackedDraw
 
                 out.print("<form action=\"useCard\" method=\"post\">");
                 out.print("<input type=\"hidden\" value=\"" + cardNumber + "\" name=\"cardNumber\" >");
-                out.print("<input type=\"submit\" value=\"" + card.toString() + "\" "+ isDisabled+">");
+                out.print("<input type=\"submit\" value=\"" + card.toString() + "\" " + isDisabled + ">");
                 out.print("</form>");
                 cardNumber += ApplicationConstants.ITERATION_VALUE;
             }
