@@ -40,7 +40,7 @@ public class JoinGame extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String methodName = new Throwable().getStackTrace()[0].getMethodName();
         GameLogger.getInstance().log(Level.INFO,
-                String.format("%s servlet, %s method call", ChooseSign.class.getName(), methodName));
+                String.format("%s servlet, %s method call", JoinGame.class.getName(), methodName));
 
         HttpSession session = req.getSession(false);
         if (session == null) {
@@ -68,7 +68,7 @@ public class JoinGame extends HttpServlet {
                 session.setAttribute("gameId", gameId);
                 resp.sendRedirect("game.jsp");
             } else {
-                //Nothing
+                resp.sendRedirect("game.jsp");
             }
 
         }
