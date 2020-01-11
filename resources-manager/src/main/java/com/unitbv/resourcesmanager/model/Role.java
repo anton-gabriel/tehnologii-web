@@ -12,20 +12,23 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private Integer id;
+    @Column(name="role_id")
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "client_id")
     private Client client;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "role_right",
-            joinColumns = {@JoinColumn(name = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "id")})
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "right_id"))
     private List<Right> rights;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "role_user",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
 
     /**
@@ -33,7 +36,7 @@ public class Role {
      *
      * @return the id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -42,7 +45,7 @@ public class Role {
      *
      * @param id the id
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

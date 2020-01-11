@@ -15,8 +15,8 @@ public class Right {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    @Column(name = "right_id")
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "name", nullable = false)
@@ -30,7 +30,7 @@ public class Right {
      *
      * @return the id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -39,7 +39,7 @@ public class Right {
      *
      * @param id the id
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

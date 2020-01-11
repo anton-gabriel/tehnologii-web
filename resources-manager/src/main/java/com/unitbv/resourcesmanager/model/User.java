@@ -9,13 +9,13 @@ import java.util.List;
  * The type User.
  */
 @Entity
-@Table(name = "user")
+@Table(name = "app_user")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "username", unique = true, nullable = false)
     private String username;
@@ -27,10 +27,7 @@ public class User {
     @Column(name = "type", nullable = false)
     private UserType type;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role",
-            joinColumns = {@JoinColumn(name = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "id")})
+    @ManyToMany(mappedBy = "users")
     private List<Role> roles;
 
     /**
@@ -38,7 +35,7 @@ public class User {
      *
      * @return the id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -47,7 +44,7 @@ public class User {
      *
      * @param id the id
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
