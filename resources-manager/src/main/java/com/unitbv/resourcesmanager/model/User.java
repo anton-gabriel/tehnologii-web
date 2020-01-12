@@ -1,6 +1,7 @@
 package com.unitbv.resourcesmanager.model;
 
 import com.unitbv.resourcesmanager.utils.enums.UserType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.List;
@@ -81,7 +82,8 @@ public class User {
      * @param password the password
      */
     public void setPassword(String password) {
-        this.password = password;
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        this.password = encoder.encode(password);
     }
 
     /**

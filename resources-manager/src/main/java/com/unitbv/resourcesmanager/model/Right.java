@@ -1,7 +1,6 @@
 package com.unitbv.resourcesmanager.model;
 
 import com.unitbv.resourcesmanager.utils.enums.RightType;
-import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 import java.util.List;
