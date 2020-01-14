@@ -3,13 +3,13 @@ package com.unitbv.resourcesmanager.utils.enums;
 /**
  * The enum User type.
  */
-public enum UserType {
+public enum UserRole {
     /**
      * Admin user type.
      */
-    ADMIN,
+    ROLE_ADMIN,
     /**
      * User user type.
      */
-    USER
+    ROLE_USER
 }

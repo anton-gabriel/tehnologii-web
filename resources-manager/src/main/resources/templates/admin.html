@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
     <head>
         <title>Admin page</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
     </head>
     <body>
         <h1>Welcome ADMIN </h1>
-        <h1 th:text="${session.username}" th:unless="${session == null}">[...]</h1>
 
         <div align="center">
 
@@ -22,16 +25,16 @@
                     <tr th:each="user : ${users}">
                         <td th:text="${user.username}"></td>
                         <td>
-                            <div th:switch="${user.roleList}" align="left">
+                            <div th:switch="${user.roles}" align="left">
                                 <p th:case="null">-</p>
                                 <div th:case="*">
 
-                                    <ul th:each="role : ${user.roleList}">
-                                        <li th:text="${role.student.name}"></li>
-                                        <div th:switch="${role.rightList}" align="left">
+                                    <ul th:each="role : ${user.roles}">
+                                        <li th:text="${role.client.firstName}"></li>
+                                        <div th:switch="${role.rights}" align="left">
                                             <p th:case="null">-</p>
                                             <div th:case="*">
-                                                <ul th:each="right : ${role.rightList}">
+                                                <ul th:each="right : ${role.rights}">
                                                     <li th:text="${right.name}"></li>
                                                 </ul>
                                             </div>
@@ -62,11 +65,11 @@
                         <td th:text="${role.id}"></td>
                         <td>
                             <ul>
-                                <li th:text="${role.student.name}"></li>
-                                <div th:switch="${role.rightList}" align="left">
+                                <li th:text="${role.client.firstName}"></li>
+                                <div th:switch="${role.rights}" align="left">
                                     <p th:case="null">-</p>
                                     <div th:case="*">
-                                        <ul th:each="right : ${role.rightList}">
+                                        <ul th:each="right : ${role.rights}">
                                             <li th:text="${right.name}"></li>
                                         </ul>
                                     </div>

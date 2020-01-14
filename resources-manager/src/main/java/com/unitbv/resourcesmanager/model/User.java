@@ -1,6 +1,6 @@
 package com.unitbv.resourcesmanager.model;
 
-import com.unitbv.resourcesmanager.utils.enums.UserType;
+import com.unitbv.resourcesmanager.utils.enums.UserRole;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
@@ -26,7 +26,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
-    private UserType type;
+    private UserRole type;
 
     @ManyToMany(mappedBy = "users")
     private List<Role> roles;
@@ -91,7 +91,7 @@ public class User {
      *
      * @return the type
      */
-    public UserType getType() {
+    public UserRole getType() {
         return type;
     }
 
@@ -100,7 +100,7 @@ public class User {
      *
      * @param type the type
      */
-    public void setType(UserType type) {
+    public void setType(UserRole type) {
         this.type = type;
     }
 

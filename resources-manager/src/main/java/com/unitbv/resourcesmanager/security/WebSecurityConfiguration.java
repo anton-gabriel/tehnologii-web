@@ -49,8 +49,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated()
                 .and()
                 .formLogin()
-                //.loginPage("/login")
-                .defaultSuccessUrl("/home")
+                .defaultSuccessUrl("/")
                 .failureUrl("/login?error")
                 .permitAll()
                 .and()
@@ -59,15 +58,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login")
                 .permitAll()
                 .and()
-//                .rememberMe()
-//                .tokenRepository(persistentTokenRepository())
-//                .tokenValiditySeconds(24 * 60 * 60)
-//                .and()
                 .exceptionHandling()
         ;
     }
 
-    PersistentTokenRepository persistentTokenRepository(){
+        PersistentTokenRepository persistentTokenRepository(){
         JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
         tokenRepositoryImpl.setDataSource(dataSource);
         return tokenRepositoryImpl;
