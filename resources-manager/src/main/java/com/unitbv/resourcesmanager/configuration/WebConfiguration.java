@@ -27,6 +27,10 @@ public class WebConfiguration implements WebMvcConfigurer
         registry.addViewController("/").setViewName("index");
         registry.addViewController("/admin").setViewName("admin");
         registry.addViewController("/pageNotFound").setViewName("pageNotFound");
+        registry.addViewController("/forbiddenPage").setViewName("forbiddenPage");
+        registry.addViewController("/badRequestPage").setViewName("badRequestPage");
+        registry.addViewController("/errorPageRequest").setViewName("errorPage");
+        registry.addViewController("/admin/roles/**").setViewName("roles");
     }
 
     @Override
@@ -44,8 +48,10 @@ public class WebConfiguration implements WebMvcConfigurer
     @Bean
     public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
         return container -> {
-            container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,
-                    "/pageNotFound"));
+            container.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN,"/forbiddenPage"));
+            container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/pageNotFound"));
+            container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/errorPage"));
+            container.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST, "/badRequestPage"));
         };
     }
 }

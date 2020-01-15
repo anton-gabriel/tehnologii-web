@@ -1,7 +1,9 @@
 package com.unitbv.resourcesmanager.controller;
 
+import com.unitbv.resourcesmanager.model.Client;
 import com.unitbv.resourcesmanager.model.User;
 import com.unitbv.resourcesmanager.repository.ClientRepository;
+import com.unitbv.resourcesmanager.repository.RoleRepository;
 import com.unitbv.resourcesmanager.repository.UserRepository;
 import com.unitbv.resourcesmanager.utils.enums.RightType;
 import com.unitbv.resourcesmanager.utils.enums.UserRole;
@@ -17,28 +19,33 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin")
-public class AdminController {
+@RequestMapping("admin/roles")
+public class RoleController {
 
     @Autowired
-    private UserRepository userRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
     private ClientRepository clientRepository;
 
-    @ModelAttribute("users")
-    public List<User> getAllUsers() {
-        return userRepository.getAllUserByType(UserRole.ROLE_USER);
+    @ModelAttribute("user")
+    public User getUser(Model model){
+        return (User) model.getAttribute("user");
     }
 
-    @GetMapping("admin/roles/{id}")
-    public String getUser(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userRepository.getOne(id));
-        return "redirect:/admin/roles";
+    @ModelAttribute("rightTypes")
+    public List<RightType> getRightTypes() {
+        List<RightType> rightTypes =  Arrays.asList(RightType.values());
+        return rightTypes;
+    }
+
+    @ModelAttribute("availableResource")
+    public List<Client> getAvailableResources() {
+        return clientRepository.findAll();
     }
 
     @GetMapping
     public String map(Model model) {
-        return "admin";
+        return "roles";
     }
 }

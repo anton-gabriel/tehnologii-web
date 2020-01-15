@@ -15,10 +15,6 @@ public class Role {
     @Column(name="role_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
-    private Client client;
-
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "role_right",
             joinColumns = @JoinColumn(name = "role_id"),
@@ -47,24 +43,6 @@ public class Role {
      */
     public void setId(Long id) {
         this.id = id;
-    }
-
-    /**
-     * Gets client.
-     *
-     * @return the client
-     */
-    public Client getClient() {
-        return client;
-    }
-
-    /**
-     * Sets client.
-     *
-     * @param client the client
-     */
-    public void setClient(Client client) {
-        this.client = client;
     }
 
     /**

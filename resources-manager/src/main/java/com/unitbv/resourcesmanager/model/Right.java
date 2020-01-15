@@ -9,13 +9,17 @@ import java.util.List;
  * The type Right.
  */
 @Entity
-@Table(name="right")
+@Table(name="user_right")
 public class Right {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "right_id")
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id")
+    private Client client;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "name", nullable = false)
@@ -58,6 +62,24 @@ public class Right {
      */
     public void setName(RightType name) {
         this.name = name;
+    }
+
+    /**
+     * Gets client.
+     *
+     * @return the client
+     */
+    public Client getClient() {
+        return client;
+    }
+
+    /**
+     * Sets client.
+     *
+     * @param client the client
+     */
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     /**

@@ -5,80 +5,30 @@
 
     <head>
         <title>Admin page</title>
-        <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
     <body>
-        <h1>Welcome ADMIN </h1>
+    <div th:object="${users}">
 
-        <div align="center">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col"> Username </th>
+                <th scope="col"> Roles </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${users.isEmpty()}">
+                <td colspan="2"> No Users Available </td>
+            </tr>
+            <tr th:each="user : ${users}">
+                <td><span th:text="${user.username}"></span></td>
+                <td><span th:text="${user.roles.size()}"></span></td>
+                <td><span><a th:href="@{admin/roles/{id}(id=${user.id})}">View Rights</a></span></td>
+            </tr>
+            </tbody>
+        </table>
 
-            <table border="1" style="width:600px;">
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Role</th>
-                        <th>Edit Role</th>
-                        <th>Add Role</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="user : ${users}">
-                        <td th:text="${user.username}"></td>
-                        <td>
-                            <div th:switch="${user.roles}" align="left">
-                                <p th:case="null">-</p>
-                                <div th:case="*">
-
-                                    <ul th:each="role : ${user.roles}">
-                                        <li th:text="${role.client.firstName}"></li>
-                                        <div th:switch="${role.rights}" align="left">
-                                            <p th:case="null">-</p>
-                                            <div th:case="*">
-                                                <ul th:each="right : ${role.rights}">
-                                                    <li th:text="${right.name}"></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </ul>
-                                </div>
-                            </div>
-                        </td>
-                        <td><a th:href="@{/admin/editUser/{id}(id=${user.id})}" class="btn">Edit</a></td>
-                        <td><a th:href="@{/admin/addUser/{id}(id=${user.id})}" class="btn">Add</a></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <br/>
-            <br/>
-
-            <a href="/admin/role" class="btn"> Add Role</a>
-            <table border="1" style="width:600px;">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Roles</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="role : ${roles}">
-                        <td th:text="${role.id}"></td>
-                        <td>
-                            <ul>
-                                <li th:text="${role.client.firstName}"></li>
-                                <div th:switch="${role.rights}" align="left">
-                                    <p th:case="null">-</p>
-                                    <div th:case="*">
-                                        <ul th:each="right : ${role.rights}">
-                                            <li th:text="${right.name}"></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </ul>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    </div>
     </body>
 </html>
