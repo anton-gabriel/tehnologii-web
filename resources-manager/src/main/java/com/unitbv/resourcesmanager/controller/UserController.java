@@ -1,29 +1,27 @@
 package com.unitbv.resourcesmanager.controller;
 
-import com.unitbv.resourcesmanager.dto.RoleDto;
+
+import com.unitbv.resourcesmanager.dto.ClientDto;
 import com.unitbv.resourcesmanager.model.Client;
-import com.unitbv.resourcesmanager.model.Right;
 import com.unitbv.resourcesmanager.model.Role;
 import com.unitbv.resourcesmanager.model.User;
 import com.unitbv.resourcesmanager.repository.ClientRepository;
 import com.unitbv.resourcesmanager.repository.RoleRepository;
 import com.unitbv.resourcesmanager.repository.UserRepository;
 import com.unitbv.resourcesmanager.utils.enums.RightType;
-import com.unitbv.resourcesmanager.utils.enums.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("admin/userDetails/{id}")
+@RequestMapping("user")
 public class UserController {
-
     @Autowired
     private RoleRepository roleRepository;
 
@@ -33,90 +31,68 @@ public class UserController {
     @Autowired
     private ClientRepository clientRepository;
 
-
-    @ModelAttribute("user")
-    public User getUser(@PathVariable("id") long id){
-        return userRepository.getOne(id);
+    @ModelAttribute("loggedUser")
+    public User getLoggedUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userRepository.findUserByUsername(auth.getName()).get();
     }
 
-    @ModelAttribute("newRole")
-    public RoleDto getNewRole() {
-        return new RoleDto();
+    @ModelAttribute("clientDto")
+    public ClientDto getDtoClient(){
+        return new ClientDto();
     }
 
-    @ModelAttribute("existingRole")
-    public RoleDto getExistingRole() {
-        return new RoleDto();
+    @ModelAttribute("readableClients")
+    public List<Client> getReadableClients(@ModelAttribute("loggedUser") User user) {
+        return user.getRoles().stream()
+                .flatMap(role -> role.getRights().stream())
+                .filter(right -> right.getName() == RightType.READ)
+                .map(right -> right.getClient())
+                .collect(Collectors.toList());
     }
 
-    @ModelAttribute("rightTypes")
-    public List<RightType> getRightTypes() {
-        return Arrays.asList(RightType.values());
+    @ModelAttribute("modifiableClients")
+    public List<Client> getModifiableClients(@ModelAttribute("loggedUser") User user) {
+        return user.getRoles().stream()
+                .flatMap(role -> role.getRights().stream())
+                .filter(right -> right.getName() == RightType.MODIFY)
+                .map(right -> right.getClient())
+                .collect(Collectors.toList());
     }
 
-    @ModelAttribute("availableRoles")
-    public List<Role> getAvailableRoles() {
-        return roleRepository.findAll();
+    @ModelAttribute("deletableClients")
+    public List<Client> getDeletableClients(@ModelAttribute("loggedUser") User user) {
+        return user.getRoles().stream()
+                .flatMap(role -> role.getRights().stream())
+                .filter(right -> right.getName() == RightType.DELETE)
+                .map(right -> right.getClient())
+                .collect(Collectors.toList());
     }
 
-    @ModelAttribute("availableResource")
-    public List<Client> getAvailableResources() {
-        return clientRepository.findAll();
+    @PostMapping(value = "/modify/{clientId}")
+    public  String modifyClient(@ModelAttribute("clientDto") ClientDto clientDto,
+                                @PathVariable("clientId") long clientId)
+    {
+        Client client = clientRepository.getOne(clientId);
+        client.setEmail(clientDto.getEmail());
+        client.setFirstName(clientDto.getFirstName());
+        client.setLastName(clientDto.getLastName());
+        clientRepository.save(client);
+        return "redirect:/user";
     }
 
-    @PostMapping(value = "/createRole")
-    public String addRole(@ModelAttribute("newRole") @Valid RoleDto roleDto,
-                          @PathVariable("id") long id){
-        User desiredUser = userRepository.getOne(id);
-        RightType rightType = roleDto.getRightType();
-        Role desiredRole = new Role();
-        Right desiredRight = new Right();
-        desiredRight.setName(rightType);
-        desiredRight.setClient(clientRepository.getClientByEmail(roleDto.getResourceName()).get());
-        desiredRole.getRights().add(desiredRight);
-
-        desiredUser.getRoles().add(desiredRole);
-        desiredRole.getUsers().add(desiredUser);
-
-        roleRepository.save(desiredRole);
-        userRepository.save(desiredUser);
-
-        return "redirect:/admin/userDetails/{id}/";
+    @PostMapping(value = "/delete/{clientId}")
+    public  String deleteClient(@ModelAttribute("clientDto") ClientDto clientDto,
+                                @PathVariable("clientId") long clientId)
+    {
+        Client client = clientRepository.getOne(clientId);
+        client.setActive(false);
+        clientRepository.save(client);
+        return "redirect:/user";
     }
-
-    @PostMapping(value = "/setRole")
-    public String setRole(@ModelAttribute("existingRole") @Valid RoleDto roleDto,
-                          @PathVariable("id") long id){
-        User desiredUser = userRepository.getOne(id);
-        Role desiredRole = roleRepository.getOne(roleDto.getId());
-
-        desiredRole.getUsers().add(desiredUser);
-        desiredUser.getRoles().add(desiredRole);
-
-        roleRepository.save(desiredRole);
-        userRepository.save(desiredUser);
-
-        return "redirect:/admin/userDetails/{id}/";
-    }
-
-
-    @PostMapping(value = "/remove/{roleId}")
-    public String removeRole(@PathVariable("roleId") long roleId, @PathVariable("id") long userId){
-        Role targetRole = roleRepository.getOne(roleId);
-        User targetUser = userRepository.getOne((userId));
-        if(targetUser.getRoles() == null){
-            return "redirect:/admin/userDetails/{id}/";
-        }
-        targetUser.getRoles().remove(targetRole);
-        targetRole.getUsers().remove(targetUser);
-        userRepository.save(targetUser);
-        roleRepository.save(targetRole);
-        return "redirect:/admin/userDetails/{id}/";
-    }
-
 
     @GetMapping
     public String map(Model model) {
-        return "userDetails";
+        return "user";
     }
 }

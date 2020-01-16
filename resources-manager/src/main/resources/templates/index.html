@@ -18,6 +18,12 @@
                 User management
             </a>
             <a type="button"
+               class="btn btn-primary"
+               sec:authorize="hasRole('ROLE_USER')"
+               th:href="@{/user}">
+                My resources
+            </a>
+            <a type="button"
                class="btn btn-danger"
                sec:authorize="isAuthenticated()"
                th:href="@{/logout}">

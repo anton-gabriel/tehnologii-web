@@ -32,6 +32,7 @@ public class WebConfiguration implements WebMvcConfigurer
         registry.addViewController("/notAllowedMethod").setViewName("notAllowedMethod");
         registry.addViewController("/errorPageRequest").setViewName("errorPage");
         registry.addViewController("/admin/userDetails/**").setViewName("userDetails");
+        registry.addViewController("/user").setViewName("user");
     }
 
     @Override
