@@ -33,13 +33,19 @@ public class UserController {
     @Autowired
     private ClientRepository clientRepository;
 
+
     @ModelAttribute("user")
     public User getUser(@PathVariable("id") long id){
         return userRepository.getOne(id);
     }
 
     @ModelAttribute("newRole")
-    public RoleDto getRole() {
+    public RoleDto getNewRole() {
+        return new RoleDto();
+    }
+
+    @ModelAttribute("existingRole")
+    public RoleDto getExistingRole() {
         return new RoleDto();
     }
 
@@ -48,31 +54,29 @@ public class UserController {
         return Arrays.asList(RightType.values());
     }
 
+    @ModelAttribute("availableRoles")
+    public List<Role> getAvailableRoles() {
+        return roleRepository.findAll();
+    }
+
     @ModelAttribute("availableResource")
     public List<Client> getAvailableResources() {
         return clientRepository.findAll();
     }
 
-    @PostMapping
+    @PostMapping(value = "/createRole")
     public String addRole(@ModelAttribute("newRole") @Valid RoleDto roleDto,
                           @PathVariable("id") long id){
         User desiredUser = userRepository.getOne(id);
         RightType rightType = roleDto.getRightType();
         Role desiredRole = new Role();
-        ArrayList<Right> rights = new ArrayList<>();
         Right desiredRight = new Right();
         desiredRight.setName(rightType);
         desiredRight.setClient(clientRepository.getClientByEmail(roleDto.getResourceName()).get());
-        rights.add(desiredRight);
+        desiredRole.getRights().add(desiredRight);
 
-        desiredRole.setRights(rights);
-        ArrayList<User> users = new ArrayList<>();
-        users.add(desiredUser);
-        desiredRole.setUsers(users);
-
-        ArrayList<Role> roles = new ArrayList<>();
-        roles.add(desiredRole);
-        desiredUser.setRoles(roles);
+        desiredUser.getRoles().add(desiredRole);
+        desiredRole.getUsers().add(desiredUser);
 
         roleRepository.save(desiredRole);
         userRepository.save(desiredUser);
@@ -80,8 +84,23 @@ public class UserController {
         return "redirect:/admin/userDetails/{id}/";
     }
 
-    @PostMapping
-    @RequestMapping(value = "/remove/{roleId}")
+    @PostMapping(value = "/setRole")
+    public String setRole(@ModelAttribute("existingRole") @Valid RoleDto roleDto,
+                          @PathVariable("id") long id){
+        User desiredUser = userRepository.getOne(id);
+        Role desiredRole = roleRepository.getOne(roleDto.getId());
+
+        desiredRole.getUsers().add(desiredUser);
+        desiredUser.getRoles().add(desiredRole);
+
+        roleRepository.save(desiredRole);
+        userRepository.save(desiredUser);
+
+        return "redirect:/admin/userDetails/{id}/";
+    }
+
+
+    @PostMapping(value = "/remove/{roleId}")
     public String removeRole(@PathVariable("roleId") long roleId, @PathVariable("id") long userId){
         Role targetRole = roleRepository.getOne(roleId);
         User targetUser = userRepository.getOne((userId));

@@ -15,7 +15,7 @@
 
 <div>
 
-    <form th:action="@{/admin/userDetails/{id}(id=${user.id})}" method="post" th:object="${newRole}">
+    <form th:action="@{/admin/userDetails/{id}/createRole(id=${user.id})}" method="post" th:object="${newRole}">
         <div class="card"
              style="margin: 25px; background-color: #d1d9e0">
             <div class="card-body">
@@ -53,7 +53,7 @@
         </div>
     </form>
 
-    <form th:action="@{/admin/userDetails/{id}(id=${user.id})}" method="post" th:object="${newRole}">
+    <form th:action="@{/admin/userDetails/{id}/setRole(id=${user.id})}" method="post" th:object="${existingRole}">
         <div class="card"
              style="margin: 25px; background-color: #d1d9e0">
             <div class="card-body">
@@ -72,8 +72,9 @@
                         <td></td>
                         <td></td>
                         <td>
-                            <select class="mdb-select md-form" th:object="${newRole}" th:field="*{rightType}">
-                                <option th:each="right : ${rightTypes}"  th:text="${right}" th:value="${right}"></option>
+                            <select class="mdb-select md-form" th:object="${existingRole}" th:field="*{id}">
+                                <option th:each="availableRole : ${availableRoles}"  th:text="${availableRole.toString()}"
+                                        th:value="${availableRole.id}"></option>
                             </select>
                         </td>
                         <td>
@@ -99,7 +100,7 @@
         <tbody>
 
         <tr th:each="role : ${user.roles}">
-            <form th:action="@{/admin/userDetails/{id}/remove/{roleId}(id=${user.id}, roleId=${role.id})}">
+            <form th:action="@{/admin/userDetails/{id}/remove/{roleId}(id=${user.id}, roleId=${role.id})}" method="post">
             <td><span th:text="${role.id}"> Role </span></td>
 
             <td>

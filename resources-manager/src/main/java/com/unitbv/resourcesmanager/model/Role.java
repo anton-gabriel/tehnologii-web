@@ -1,6 +1,7 @@
 package com.unitbv.resourcesmanager.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,6 +52,10 @@ public class Role {
      * @return the rights
      */
     public List<Right> getRights() {
+        if (rights == null)
+        {
+            rights = new ArrayList<>();
+        }
         return rights;
     }
 
@@ -69,6 +74,9 @@ public class Role {
      * @return the users
      */
     public List<User> getUsers() {
+        if(users == null){
+            users = new ArrayList<>();
+        }
         return users;
     }
 
@@ -79,5 +87,12 @@ public class Role {
      */
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "rights=" + rights.toString() +
+                '}';
     }
 }

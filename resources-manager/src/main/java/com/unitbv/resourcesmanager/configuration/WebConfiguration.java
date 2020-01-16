@@ -29,6 +29,7 @@ public class WebConfiguration implements WebMvcConfigurer
         registry.addViewController("/pageNotFound").setViewName("pageNotFound");
         registry.addViewController("/forbiddenPage").setViewName("forbiddenPage");
         registry.addViewController("/badRequestPage").setViewName("badRequestPage");
+        registry.addViewController("/notAllowedMethod").setViewName("notAllowedMethod");
         registry.addViewController("/errorPageRequest").setViewName("errorPage");
         registry.addViewController("/admin/userDetails/**").setViewName("userDetails");
     }
@@ -52,6 +53,7 @@ public class WebConfiguration implements WebMvcConfigurer
             container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/pageNotFound"));
             container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/errorPage"));
             container.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST, "/badRequestPage"));
+            container.addErrorPages(new ErrorPage(HttpStatus.METHOD_NOT_ALLOWED, "/notAllowedMethod"));
         };
     }
 }

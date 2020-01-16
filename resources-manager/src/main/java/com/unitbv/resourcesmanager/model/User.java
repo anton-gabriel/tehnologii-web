@@ -4,6 +4,7 @@ import com.unitbv.resourcesmanager.utils.enums.UserRole;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -110,6 +111,9 @@ public class User {
      * @return the roles
      */
     public List<Role> getRoles() {
+        if(roles == null){
+            roles = new ArrayList<>();
+        }
         return roles;
     }
 

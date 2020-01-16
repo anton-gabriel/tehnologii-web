@@ -99,4 +99,12 @@ public class Right {
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
+
+    @Override
+    public String toString() {
+        return "Right{" +
+                "client=" + client.getEmail() +
+                ", name=" + name +
+                '}';
+    }
 }
