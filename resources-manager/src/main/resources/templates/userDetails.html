@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${user.username}"></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+
+
+
+<div>
+
+    <form th:action="@{/admin/userDetails/{id}(id=${user.id})}" method="post" th:object="${newRole}">
+        <div class="card"
+             style="margin: 25px; background-color: #d1d9e0">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col"> </th>
+                        <th scope="col"> Right </th>
+                        <th scope="col"> Resource </th>
+                        <th scope="col"> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><span class="text-primary">Add new</span></td>
+                        <td>
+                            <select class="mdb-select md-form" th:object="${newRole}" th:field="*{rightType}">
+                                <option th:each="right : ${rightTypes}"  th:text="${right}" th:value="${right}"></option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="mdb-select md-form" th:object="${newRole}" th:field="*{resourceName}">
+                                <option th:each="resource : ${availableResource}" th:value="${resource.email}"
+                                        th:text="${resource.email}"></option>
+                            </select>
+                        </td>
+                        <td>
+                            <button type="submit"
+                                    class="btn btn-primary"> Add </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+
+    <form th:action="@{/admin/userDetails/{id}(id=${user.id})}" method="post" th:object="${newRole}">
+        <div class="card"
+             style="margin: 25px; background-color: #d1d9e0">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col"> </th>
+                        <th scope="col"> </th>
+                        <th scope="col"> Role </th>
+                        <th scope="col"> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><span class="text-primary">Add existing</span></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <select class="mdb-select md-form" th:object="${newRole}" th:field="*{rightType}">
+                                <option th:each="right : ${rightTypes}"  th:text="${right}" th:value="${right}"></option>
+                            </select>
+                        </td>
+                        <td>
+                            <button type="submit"
+                                    class="btn btn-primary"> Add </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col"> Role</th>
+            <th scope="col"> Rights</th>
+            <th scope="col"> Action</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="role : ${user.roles}">
+            <form th:action="@{/admin/userDetails/{id}/remove/{roleId}(id=${user.id}, roleId=${role.id})}">
+            <td><span th:text="${role.id}"> Role </span></td>
+
+            <td>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col"> Right</th>
+                        <th scope="col"> Resource</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="right: ${role.rights}">
+                        <td><span th:text="${right.name}"></span></td>
+                        <td><span th:text="${right.client.email}"></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+
+            <td>
+                <span>
+                    <button type="submit"
+                       class="btn btn-danger">Remove right</button>
+                </span>
+            </td>
+            </form>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+</html>

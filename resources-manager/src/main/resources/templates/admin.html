@@ -24,7 +24,7 @@
             <tr th:each="user : ${users}">
                 <td><span th:text="${user.username}"></span></td>
                 <td><span th:text="${user.roles.size()}"></span></td>
-                <td><span><a th:href="@{admin/roles/{id}(id=${user.id})}">View Rights</a></span></td>
+                <td><span><a th:href="@{admin/userDetails/{id}(id=${user.id})}">View Rights</a></span></td>
             </tr>
             </tbody>
         </table>

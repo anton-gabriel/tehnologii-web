@@ -30,7 +30,7 @@ public class WebConfiguration implements WebMvcConfigurer
         registry.addViewController("/forbiddenPage").setViewName("forbiddenPage");
         registry.addViewController("/badRequestPage").setViewName("badRequestPage");
         registry.addViewController("/errorPageRequest").setViewName("errorPage");
-        registry.addViewController("/admin/roles/**").setViewName("roles");
+        registry.addViewController("/admin/userDetails/**").setViewName("userDetails");
     }
 
     @Override

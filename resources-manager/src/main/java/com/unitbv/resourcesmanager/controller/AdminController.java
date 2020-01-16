@@ -31,12 +31,6 @@ public class AdminController {
         return userRepository.getAllUserByType(UserRole.ROLE_USER);
     }
 
-    @GetMapping("admin/roles/{id}")
-    public String getUser(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userRepository.getOne(id));
-        return "redirect:/admin/roles";
-    }
-
     @GetMapping
     public String map(Model model) {
         return "admin";
