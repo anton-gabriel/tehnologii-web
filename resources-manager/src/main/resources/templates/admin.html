@@ -30,5 +30,12 @@
         </table>
 
     </div>
+    <a type="button"
+       class="btn btn-danger"
+       sec:authorize="isAuthenticated()"
+       th:href="@{/logout}">
+        Logout
+    </a>
+
     </body>
 </html>

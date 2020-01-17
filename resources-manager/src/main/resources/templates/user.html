@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
     <meta charset="UTF-8">
@@ -136,7 +137,12 @@
         </div>
     </div>
 </div>
-
+<a type="button"
+   class="btn btn-danger"
+   sec:authorize="isAuthenticated()"
+   th:href="@{/logout}">
+    Logout
+</a>
 
 </body>
 </html>
